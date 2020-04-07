@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title - VS Sagittarius</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.moneymask.js" type="text/javascript"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand">
+            <img src="~/img/logo.png" width="50" height="55" />
+            @Html.ActionLink("Mutantes MC", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <!--Início dropdown com submenu-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Definições</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item">@Html.ActionLink("Clube", "Index", "Parametros", new { @class = "dropdown-item " })</a></li>
+                        <li><a href="#">@Html.ActionLink("Usuários", "Index", "Autenticacao", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle">Parâmetros</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item">@Html.ActionLink("Tipos de chave", "Index", "TipoChave", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                                <li><a class="dropdown-item">@Html.ActionLink("Chaves", "Index", "Chaves", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                                <li><a class="dropdown-item">@Html.ActionLink("Contas", "Index", "Contas", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                                <li><a class="dropdown-item">@Html.ActionLink("Formas de pagamento", "Index", "FormaPagamento", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                                <li><a class="dropdown-item">@Html.ActionLink("Cargos de diretoria", "Index", "Cargos", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                                <li><a class="dropdown-item">@Html.ActionLink("Facções", "Index", "Faccoes", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                                <li><a class="dropdown-item">@Html.ActionLink("Motos", "Index", "Motos", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <!--Fim dropdown com submenu-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item">@Html.ActionLink("Membros", "Index", "Membros", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                        <li><a class="dropdown-item">@Html.ActionLink("Prestações", "Index", "Prestacoes", new { area = "" }, new { @class = "dropdown-item " })</a></li>
+                        <li><a class="dropdown-item disabled">@Html.ActionLink("Diretoria", "Index", "Diretoria", new { area = "" }, new { @class = "dropdown-item disabled" })</a></li>
+
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relatórios</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item disabled">Membros</a></li>
+                        <li><a class="dropdown-item disabled">Financeiro</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Ajuda</a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav nav justify-content-end">
+                <li class="nav-item dropdown justify-content-end">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name<span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a href="#">@Html.ActionLink("Alterar senha", "AlterarSenha", "Perfil", new { @class = "dropdown-item " })</a></li>
+                        <li><a href="#">@Html.ActionLink("Sair", "Logout", "Autenticacao", new { @class = "dropdown-item " })</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <br />
+
+        @RenderBody()
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,65 @@
+﻿@model ProjetoTCC.Motos
+
+@{
+    ViewBag.Title = "Deletar";
+}
+
+<h2>Deletar moto</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>,
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Motos", "Index", "Motos")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Deletar</li>
+    </ol>
+</nav>
+
+<h3>Tem certeza que deseja deletar este registro?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cilindrada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cilindrada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ano)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ano)
+        </dd>
+
+    </dl>
+
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <input type="submit" value="Deletar" class="btn btn-danger " />
+            <button type="button" class="btn btn-secondary ">@Html.ActionLink("Cancelar", "Index")</button>
+        </div>
+    }
+</div>

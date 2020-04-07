@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ProjetoTCC.TipoChave>
+
+@{
+    ViewBag.Title = "Tipos de chave";
+}
+
+<h2>Tipos de chave</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tipos de chave</li>
+    </ol>
+</nav>
+
+<p>
+    <button type="button" class="btn btn-dark ">@Html.ActionLink("Novo", "Create")</button>
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inativo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tipo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inativo)
+        </td>
+        <td>
+            <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { Tipo=item.Tipo }) </button>
+            <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { Tipo = item.Tipo }) </button>
+            <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { Tipo = item.Tipo }) </button>
+        </td>
+    </tr>
+}
+
+</table>

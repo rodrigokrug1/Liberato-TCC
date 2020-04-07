@@ -1,0 +1,90 @@
+﻿@model IEnumerable<ProjetoTCC.Prestacoes>
+
+@{
+    /**/
+
+    ViewBag.Title = "Prestações";
+}
+
+<h2>Prestações</h2>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></a></li>
+        <li class="breadcrumb-item active" aria-current="page">Prestações</li>
+    </ol>
+</nav>
+
+<p>
+    <button type="button" class="btn btn-dark ">@Html.ActionLink("Novo", "Create")</button>
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Membros.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Conta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Chave)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sequencia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DtVencimento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Situacao)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Membros.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contas.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Chave)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sequencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DtVencimento)
+            </td>
+
+            @if (item.Situacao == "A")
+            {
+                <td>
+                    <button type="button" class="btn btn-secondary btn-sm btn-block">Em aberto</button>
+                </td>
+            }
+            else if (item.Situacao == "V")
+            {
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm btn-block">Vencido</button>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <button type="button" class="btn btn-success btn-sm btn-block">Pago</button>
+                </td>
+            }
+
+            <td>
+                <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { nrPrest = item.Nrprest }) </button>
+                <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { nrPrest = item.Nrprest }) </button>
+                <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { nrPrest = item.Nrprest }) </button>
+            </td>
+        </tr>
+    }
+</table>

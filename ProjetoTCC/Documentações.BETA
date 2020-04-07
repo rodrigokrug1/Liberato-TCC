@@ -1,0 +1,42 @@
+﻿Zerar identity SQL Server:
+https://educoutinho.com.br/sql-server/reiniciar-coluna-identity-zerar-identity-reset-identity/
+
+Calcular idade automaticamente:
+https://pt.stackoverflow.com/questions/361640/como-adicionar-idade-no-input
+
+Buscar endereço pelo CEP:
+https://viacep.com.br/exemplo/jquery/
+
+Problema da data no edit:
+https://www.eduardopires.net.br/2013/08/asp-net-mvc-atributo-datatype-date-nao-exibe-valor-view/
+
+Implementação de login e senha:
+https://www.devmedia.com.br/exemplo/autenticacao-no-asp-net-mvc/60
+
+Cláusula Where em SelectList:
+https://docs.microsoft.com/pt-br/dotnet/csharp/linq/write-linq-queries
+
+Dropdown com condição de outro dropdown:
+https://pt.stackoverflow.com/questions/68076/como-carregar-um-dropdown-com-um-valor-selecionado
+
+Converter data para yyyy/MM:
+SELECT LEFT(CONVERT(varchar, GetDate(),112),6)
+https://docs.microsoft.com/pt-br/sql/t-sql/functions/cast-and-convert-transact-sql?view=sql-server-ver15
+https://stackoverflow.com/questions/14217751/convert-date-to-yyyymm-format/14217859
+
+Máscaras para campos via jQuery:
+https://pt.stackoverflow.com/questions/244522/mascara-de-cpf-e-data-de-nascimento-asp-net-mvc
+https://igorescobar.github.io/jQuery-Mask-Plugin/docs.html
+http://www.macoratti.net/15/12/mvc_mask1.htm
+https://www.devmedia.com.br/forum/como-acrescentar-mascara-no-mvc/603499
+
+Validação de valores monetários para PT-BR:
+https://www.devmedia.com.br/asp-net-mvc-manipulando-valores-monetarios/28907
+
+Condições em botões:
+http://linksinergia.com.br/2017/08/02/caminho-rapido-criando-operacoes-utilizando-variaveis-com-razor-em-uma-aplicacao-do-tipo-asp-net-mvc-2/
+
+Datatables, charts:
+https://datatables.net/
+https://startbootstrap.com/themes/sb-admin-2/
+https://startbootstrap.com/templates/sb-admin/

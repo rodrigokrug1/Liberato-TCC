@@ -1,0 +1,61 @@
+﻿@model ProjetoTCC.TipoChave
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar tipo de chave</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>,
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Tipos de chave", "Index", "TipoChave")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Editar</li>
+    </ol>
+</nav>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Tipo)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tipo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tipo, new { htmlAttributes = new { @class = "form-control readonly", @readonly = "readonly", disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.CheckBoxFor(model => model.Inativo)
+            @Html.ValidationMessageFor(model => model.Inativo, "", new { @class = "form-check-input" })
+            <label class="form-check-label" for="gridCheck">
+                Inativo
+            </label>
+        </div>
+
+        <hr />
+
+        <div class="form-group">
+            <input type="submit" value="Salvar" class="btn btn-dark " />
+            <button type="button" class="btn btn-secondary ">@Html.ActionLink("Cancelar", "Index")</button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

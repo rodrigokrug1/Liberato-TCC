@@ -1,0 +1,89 @@
+﻿@model ProjetoTCC.Contas
+
+@{
+    ViewBag.Title = "Criar";
+}
+
+<h2>Criar conta</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>,
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Contas", "Index", "Contas")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Criar</li>
+    </ol>
+</nav>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Conta, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Conta, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Conta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Tipo, "Tipo", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Tipo", null, "Selecione", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Juro, "Juro", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Juro, new { htmlAttributes = new { @class = "form-control", @id = "Juro"} })
+            @Html.ValidationMessageFor(model => model.Juro, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Multa, "Multa", htmlAttributes: new { @class = "control-label col-md-2", @id = "Multa" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Multa, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Multa, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.CheckBoxFor(model => model.Inativo)
+        @Html.ValidationMessageFor(model => model.Inativo, "", new { @class = "form-check-input" })
+        <label class="form-check-label" for="gridCheck">
+            Inativo
+        </label>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-dark " />
+        <button type="button" class="btn btn-secondary ">@Html.ActionLink("Cancelar", "Index")</button>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+  $(function() {
+      $('#Juro').maskMoney();
+      $('#Multa').maskMoney();
+  })
+</script>
+}
