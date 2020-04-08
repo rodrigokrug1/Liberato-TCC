@@ -25,10 +25,8 @@ https://docs.microsoft.com/pt-br/sql/t-sql/functions/cast-and-convert-transact-s
 https://stackoverflow.com/questions/14217751/convert-date-to-yyyymm-format/14217859
 
 Máscaras para campos via jQuery:
-https://pt.stackoverflow.com/questions/244522/mascara-de-cpf-e-data-de-nascimento-asp-net-mvc
-https://igorescobar.github.io/jQuery-Mask-Plugin/docs.html
-http://www.macoratti.net/15/12/mvc_mask1.htm
-https://www.devmedia.com.br/forum/como-acrescentar-mascara-no-mvc/603499
+https://igorescobar.github.io/jQuery-Mask-Plugin/docs.html#removing-the-mask
+https://www.blogson.com.br/como-formatar-campos-de-cpf-cep-telefone-e-moeda-com-jquery-jmask/
 
 Validação de valores monetários para PT-BR:
 https://www.devmedia.com.br/asp-net-mvc-manipulando-valores-monetarios/28907

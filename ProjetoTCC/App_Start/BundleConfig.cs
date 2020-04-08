@@ -22,7 +22,8 @@ namespace ProjetoTCC
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/BuscaCep.js",
-                      "~/Scripts/Script.js"));
+                      "~/Scripts/Script.js",
+                      "~/Scripts/jquery.mask.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

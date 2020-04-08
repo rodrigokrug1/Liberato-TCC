@@ -80,7 +80,7 @@
                 <div class="col">
                     @Html.LabelFor(model => model.Valor, "Valor", htmlAttributes: new { @class = "control-label col" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control", @onkeypress = "$(this).mask('#.##0,00',{reverse: true})" }  })
                         @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -89,7 +89,7 @@
         <div>
             <div class="row">
                 <div class="col">
-                    @Html.LabelFor(model => model.Sequencia, "Sequencia", htmlAttributes: new { @class = "control-label col" })
+                    @Html.LabelFor(model => model.Sequencia, "Sequencia", htmlAttributes: new { @class = "control-label col", @onkeypress = "$(this).mask('0000/00')" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Sequencia, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Sequencia, "", new { @class = "text-danger" })
@@ -98,7 +98,7 @@
                 <div class="col">
                     @Html.LabelFor(model => model.ValorCalculado, "Valor calculado", htmlAttributes: new { @class = "control-label col" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.ValorCalculado, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.ValorCalculado, new { htmlAttributes = new { @class = "form-control", @onkeypress = "$(this).mask('#.##0,00',{ reverse: true})" } })
                         @Html.ValidationMessageFor(model => model.ValorCalculado, "", new { @class = "text-danger" })
                     </div>
                 </div>
