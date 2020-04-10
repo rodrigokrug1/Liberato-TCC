@@ -30,7 +30,6 @@ namespace ProjetoTCC
                 modelState.Errors.Add(e);
             }
 
-
             bindingContext.ModelState.Add(
                 bindingContext.ModelName, modelState);
             return actualValue;

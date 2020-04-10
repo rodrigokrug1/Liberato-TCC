@@ -25,11 +25,9 @@ namespace ProjetoTCC
         [Display(Name = "Sequência")]
         public string Sequencia { get; set; }
 
-        [Column(TypeName = "money")]
         public decimal? Valor { get; set; }
 
         [Display(Name = "Valor calculado")]
-        [Column(TypeName = "money")]
         public decimal? ValorCalculado { get; set; }
 
         [Display(Name = "Vencimento")]

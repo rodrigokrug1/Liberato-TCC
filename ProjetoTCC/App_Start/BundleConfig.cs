@@ -29,6 +29,10 @@ namespace ProjetoTCC
                       "~/Content/bootstrap.css",
                       "~/Content/Site.css",
                       "~/Content/dashboard.css"));
+
+            // Validações no padrão brasileiro
+            bundles.Add(new ScriptBundle("~/bundles/validations_pt-br").Include(
+                      "~/Scripts/jquery.validate.custom.pt-br*"));
         }
     }
 }

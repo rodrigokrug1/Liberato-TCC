@@ -160,7 +160,7 @@
     <Compile Include="Controllers\MotosController.cs" />
     <Compile Include="Controllers\PrestacoesController.cs" />
     <Compile Include="Controllers\TipoChaveController.cs" />
-    <Compile Include="DecimalModelBinder1.cs" />
+    <Compile Include="DecimalModelBinder.cs" />
     <Compile Include="Models\Arquivos.cs" />
     <Compile Include="Models\Cargos.cs" />
     <Compile Include="Models\Chaves.cs" />
@@ -231,6 +231,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jquery.moneymask.js" />
+    <Content Include="Scripts\jquery.validate.custom.pt-br.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

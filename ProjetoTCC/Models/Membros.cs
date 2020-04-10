@@ -47,7 +47,7 @@ namespace ProjetoTCC
         [StringLength(20)]
         public string Apelido { get; set; }
 
-        [StringLength(8)]
+        [StringLength(9)]
         public string CEP { get; set; }
 
         [Display(Name = "Endereço")]
@@ -77,7 +77,7 @@ namespace ProjetoTCC
         [StringLength(10)]
         public string RG { get; set; }
 
-        [StringLength(11)]
+        [StringLength(14)]
         public string CPF { get; set; }
 
         [StringLength(11)]
@@ -90,12 +90,13 @@ namespace ProjetoTCC
 
         [Display(Name = "E-mail")]
         [StringLength(50)]
+        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "E-mail inválido")]
         public string Email { get; set; }
 
-        [StringLength(10)]
+        [StringLength(14)]
         public string Telefone { get; set; }
 
-        [StringLength(11)]
+        [StringLength(15)]
         public string Celular { get; set; }
 
         [Display(Name = "Nome do pai")]

@@ -39,7 +39,7 @@ namespace ProjetoTCC.Controllers
         public ActionResult Create()
         {
             Prestacoes prest = new Prestacoes();
-            prest.Sequencia = DateTime.Now.ToString("yyyyMM");
+            //prest.Sequencia = DateTime.Now.ToString("yyyyMM");
             prest.DtVencimento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 5);
             Dropdown();
             return View(prest);            
@@ -47,19 +47,10 @@ namespace ProjetoTCC.Controllers
 
         // POST: Prestacoes/Create
         [HttpPost]
-        public ActionResult Create([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prestacoes, string valor, string valorC, string sequencia)
+        public ActionResult Create([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prestacoes)
         {
             try
             {
-                //valor = Regex.Replace(valor, "[^0-9,]", "");
-                //prestacoes.Valor = Convert.ToDecimal(valor);
-
-                //valorC = Regex.Replace(valor, "[^0-9,]", "");
-                //prestacoes.ValorCalculado = Convert.ToDecimal(valorC);
-
-                sequencia = Regex.Replace(sequencia, "/", "");
-                prestacoes.Sequencia = sequencia;
-
                 prestacoes.ValorCalculado = prestacoes.Valor;
 
                 if (ModelState.IsValid)

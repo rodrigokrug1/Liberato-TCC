@@ -89,9 +89,9 @@
         <div>
             <div class="row">
                 <div class="col">
-                    @Html.LabelFor(model => model.Sequencia, "Sequencia", htmlAttributes: new { @class = "control-label col", @onkeypress = "$(this).mask('0000/00')" })
+                    @Html.LabelFor(model => model.Sequencia, "Sequencia", htmlAttributes: new { @class = "control-label col" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Sequencia, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Sequencia, new { htmlAttributes = new { @class = "form-control", @onkeypress = "$(this).mask('0000/00')", placeholder = "9999/99" } })
                         @Html.ValidationMessageFor(model => model.Sequencia, "", new { @class = "text-danger" })
                     </div>
                 </div>
