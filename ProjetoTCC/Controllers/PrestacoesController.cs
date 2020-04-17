@@ -16,8 +16,16 @@ namespace ProjetoTCC.Controllers
 
         // GET: Prestacoes
         public ActionResult Index()
-        {    
+        {
+
             return View(db.Prestacoes.ToList());
+        }
+
+        private static void MascaraSequencia (Prestacoes prestacoes)
+        {
+            string esquerda = prestacoes.Sequencia.Substring(0, 4);
+            string direita = prestacoes.Sequencia.Substring(5, 6);
+            prestacoes.Sequencia = esquerda + "/" + direita;
         }
 
         // GET: Prestacoes/Details/5
@@ -39,19 +47,20 @@ namespace ProjetoTCC.Controllers
         public ActionResult Create()
         {
             Prestacoes prest = new Prestacoes();
-            //prest.Sequencia = DateTime.Now.ToString("yyyyMM");
+            prest.Sequencia = DateTime.Now.ToString("yyyyMM");
             prest.DtVencimento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 5);
             Dropdown();
+            ViewBag.NrPrest = new SelectList(db.Prestacoes).Count() + 1;
             return View(prest);            
         }
 
         // POST: Prestacoes/Create
         [HttpPost]
-        public ActionResult Create([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prestacoes)
+        public ActionResult Create([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prestacoes, string sequencia)
         {
             try
             {
-                prestacoes.ValorCalculado = prestacoes.Valor;
+                RemoveMascara(prestacoes, sequencia);
 
                 if (ModelState.IsValid)
                 {
@@ -97,10 +106,12 @@ namespace ProjetoTCC.Controllers
 
         // POST: Prestacoes/Edit/5
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prestacoes)
+        public ActionResult Edit([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prestacoes, string sequencia)
         {
             try
             {
+                RemoveMascara(prestacoes, sequencia);
+
                 if (ModelState.IsValid)
                 {
                     db.Entry(prestacoes).State = EntityState.Modified;
@@ -110,9 +121,19 @@ namespace ProjetoTCC.Controllers
                 Dropdown(prestacoes);
                 return View();
             }
-            catch
+            catch (DbEntityValidationException e)
             {
-                return View();
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
             }
         }
 
@@ -148,20 +169,95 @@ namespace ProjetoTCC.Controllers
             }
         }
 
+        public ActionResult GeraPrestacoes()
+        {
+            Dropdown();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GeraPrestacoes(Prestacoes prestacoes, string PeriodoI, string PeriodoF, string Faccoes, string Membro)
+        {
+            try
+            {
+                PeriodoI = PeriodoI.Replace("/", string.Empty);
+                PeriodoF = PeriodoF.Replace("/", string.Empty);
+
+                string DataMesStr = PeriodoI.Substring(4, 2);
+                string DataAnoStr = PeriodoI.Substring(0, 4);
+                
+                int DataAnoInt = Convert.ToInt32(DataAnoStr);
+                int DataMesInt = Convert.ToInt32(DataMesStr);
+
+                DateTime VencimentoInicial = new DateTime(DataAnoInt, DataMesInt, 5);
+
+                int x = Convert.ToInt32(PeriodoF);
+                int y = Convert.ToInt32(PeriodoI);
+                
+                int z = x - y;
+                
+                for (int i = 0; i <= z; i++)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        Prestacoes prest = new Prestacoes
+                        {
+                            Matricula = prestacoes.Matricula,
+                            Conta = prestacoes.Conta,
+                            Chave = prestacoes.Chave,
+                            Sequencia = VencimentoInicial.AddMonths(i).ToString("yyyyMM"),
+                            DtVencimento = VencimentoInicial.AddMonths(i),
+                            Situacao = "A"
+                        };
+                        db.Prestacoes.Add(prest);
+                        db.SaveChanges();
+                    };
+                }
+                return RedirectToAction("Index");
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+        }
+
+        private void ValidaDuplicidade(int matricula, string conta, string sequencia)
+        {
+
+        }
+
         private void Dropdown()
         {
             ViewBag.Matricula = new SelectList(db.Membros.Where(c => c.Inativo == false), "Matricula", "Nome");
             ViewBag.FormaPagamento = new SelectList(db.FormaPagamento, "Tipo", "Descricao");
             ViewBag.Chave = new SelectList(db.Chaves.Where(c => c.Inativo == false).Where(c => c.GeraConta == true), "Chave", "Chave");
-            ViewBag.Conta = new SelectList(db.Contas.Where(c => c.Inativo == false), "Conta", "Tipo");
+            ViewBag.Conta = db.Contas.Where(c => c.Inativo == false)
+                .Select(c => new SelectListItem()
+                {
+                    Text = c.Conta + " - " + c.Descricao,
+                    Value = c.Conta
+                });
+                
+            ViewBag.Faccao = new SelectList(db.Faccoes.Where(f => f.Inativo == false), "Chave", "Chave");
             ViewBag.Situacao = new List<SelectListItem>
             {
                 new SelectListItem {Text = "Em aberto", Value = "A"},
                 new SelectListItem {Text = "Vencido", Value = "V"},
                 new SelectListItem {Text = "Pago", Value = "P"},
             };
-            ViewBag.NrPrest = new SelectList(db.Prestacoes).Count() + 1;
+            //ViewBag.NrPrest = new SelectList(db.Prestacoes).Count() + 1;
         }
+
         private void Dropdown(Prestacoes prestacoes)
         {
             ViewBag.Matricula = new SelectList(db.Membros.Where(c => c.Inativo == false), "Matricula", "Nome",prestacoes.Matricula);
@@ -176,5 +272,9 @@ namespace ProjetoTCC.Controllers
             };
         }
 
+        private static void RemoveMascara(Prestacoes prestacoes, string sequencia)
+        {
+            prestacoes.Sequencia = sequencia.Replace("/", string.Empty);
+        }
     }
 }

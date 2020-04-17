@@ -20,8 +20,7 @@ namespace ProjetoTCC
 
         [StringLength(11)]
         public string Chave { get; set; }
-
-
+        
         [Display(Name = "Sequência")]
         public string Sequencia { get; set; }
 

@@ -1,0 +1,132 @@
+﻿@model ProjetoTCC.Prestacoes
+
+@{
+    ViewBag.Title = "Gerar Prestações";
+}
+
+<h2>Gerar prestações</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Prestações", "Index", "Prestacoes")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Gerar</li>
+    </ol>
+</nav>
+
+<hr />
+
+<h4>Gerar prestações para:</h4>
+
+<br />
+
+@using (Html.BeginForm())
+{
+    <div>
+        <div class="row">
+            <div class="col">
+                <h5>Conta</h5>
+                <div class="col">
+                    @Html.DropDownList("Conta", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
+                </div>
+            </div>
+            <div class="col">
+                <h5>Período</h5>
+                <div class="col-md-7">
+                    <div class="row">
+                        <div class="col px-lg-3">
+                            @Html.TextBox("PeriodoI", null, htmlAttributes: new { @class = "form-control", placeholder = "0000/00" })
+                        </div>
+                        até
+                        <div class="col px-lg-3">
+                            @Html.TextBox("PeriodoF", null, htmlAttributes: new { @class = "form-control", placeholder = "0000/00" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div>
+        <div class="row">
+            <div class="col">
+                <h5>Facções</h5>
+                <div class="form-check">
+                    @Html.RadioButton("Faccoes", "Todas")
+                    <label class="form-check-label">
+                        Todas as facções
+                    </label>
+                </div>
+                <div class="form-check">
+                    @Html.RadioButton("Faccoes", "Selecionada")
+                    <label class="form-check-label">
+                        Facção selecionada
+                    </label>
+                    <div class="col-">
+                        @Html.DropDownList("Faccao", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h5>Membros</h5>
+                <div class="form-check">
+                    @Html.RadioButton("Membro", "Todos")
+                    <label class="form-check-label">
+                        Todos os membros da facção selecionada
+                    </label>
+                </div>
+                <div class="form-check">
+                    @Html.RadioButton("Membro", "Selecionado")
+                    <label class="form-check-label">
+                        Membro selecionado
+                    </label>
+                    <div class="col-">
+                        @Html.DropDownList("Matricula", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#confirmaGeracao">
+            Gerar
+        </button>
+        <button type="button" class="btn btn-secondary ">@Html.ActionLink("Cancelar", "Index")</button>
+    </div>
+
+    <div class="modal fade" id="confirmaGeracao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Geração de prestações</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja iniciar a geração de prestações?
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Sim" class="btn btn-dark " />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#PeriodoI').mask('9999/99');
+            $('#PeriodoF').mask('9999/99');
+        });
+    </script>
+}

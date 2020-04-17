@@ -150,7 +150,12 @@ namespace ProjetoTCC.Controllers
         {
             ViewBag.Graduacao = new SelectList(db.Chaves.Where(c => c.Tipo == "Graduação").Where(c => c.Inativo == false), "Chave", "Chave");
             ViewBag.Faccao = new SelectList(db.Faccoes.Where(f => f.Inativo == false), "Chave", "Chave");
-            ViewBag.Motocicleta = new SelectList(db.Motos, "Id", "Modelo");
+            //ViewBag.Motocicleta = new SelectList(db.Motos, "Id", "Modelo");
+            ViewBag.Motocicleta = db.Motos.Select(m => new SelectListItem()
+            {
+                Text = m.Marca + " " + m.Modelo,
+                Value = m.Id.ToString()
+            });
 
             ViewBag.FatorRH = new List<SelectListItem>
             {

@@ -24,9 +24,10 @@ SELECT LEFT(CONVERT(varchar, GetDate(),112),6)
 https://docs.microsoft.com/pt-br/sql/t-sql/functions/cast-and-convert-transact-sql?view=sql-server-ver15
 https://stackoverflow.com/questions/14217751/convert-date-to-yyyymm-format/14217859
 
-Máscaras para campos via jQuery:
+Máscaras para campos via jQuery Mask:
 https://igorescobar.github.io/jQuery-Mask-Plugin/docs.html#removing-the-mask
 https://www.blogson.com.br/como-formatar-campos-de-cpf-cep-telefone-e-moeda-com-jquery-jmask/
+https://imasters.com.br/front-end/como-criar-mascaras-com-jquery-mask-plugin
 
 Validação de valores monetários para PT-BR:
 https://www.devmedia.com.br/asp-net-mvc-manipulando-valores-monetarios/28907
@@ -34,8 +35,11 @@ https://www.devmedia.com.br/asp-net-mvc-manipulando-valores-monetarios/28907
 Condições em botões:
 http://linksinergia.com.br/2017/08/02/caminho-rapido-criando-operacoes-utilizando-variaveis-com-razor-em-uma-aplicacao-do-tipo-asp-net-mvc-2/
 
-Datatables, charts:
+Datatables:
 https://datatables.net/
+http://www.macoratti.net/18/03/mvc5_jqrydtb1.htm
+
+Charts:
 https://startbootstrap.com/themes/sb-admin-2/
 https://startbootstrap.com/templates/sb-admin/
 

@@ -23,6 +23,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Chave, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                <small class="form-text text-muted">
+                    Chave é composta de uma única palavra com até 11 caracteres maiúsculos e sem acento. Exemplo: MUTANTE.
+                </small>
                 @Html.EditorFor(model => model.Chave, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Chave, "", new { @class = "text-danger" })
             </div>

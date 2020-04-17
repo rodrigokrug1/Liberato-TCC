@@ -22,7 +22,7 @@ namespace ProjetoTCC
         [StringLength(30)]
         public string Descricao { get; set; }
 
-        [StringLength(8)]
+        [StringLength(9)]
         public string CEP { get; set; }
 
         [StringLength(80)]

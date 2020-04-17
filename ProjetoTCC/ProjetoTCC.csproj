@@ -59,7 +59,11 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.LiveShare, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.LiveShare.1.1.57\lib\net461\Microsoft.VisualStudio.LiveShare.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -207,6 +211,11 @@
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="img\DataTables\sort_asc.png" />
+    <Content Include="img\DataTables\sort_asc_disabled.png" />
+    <Content Include="img\DataTables\sort_both.png" />
+    <Content Include="img\DataTables\sort_desc.png" />
+    <Content Include="img\DataTables\sort_desc_disabled.png" />
     <Content Include="img\logo.png" />
     <Content Include="Scripts de banco de dados\script.sql" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -214,6 +223,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\BuscaCep.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -367,6 +377,8 @@
     <Content Include="Views\Prestacoes\Edit.cshtml" />
     <Content Include="Views\Prestacoes\Delete.cshtml" />
     <Content Include="Views\Prestacoes\Details.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Prestacoes\GeraPrestacoes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -222,7 +222,7 @@ namespace ProjetoTCC
             modelBuilder.Entity<Parametros>()
                 .Property(e => e.Pais)
                 .IsUnicode(false);
-
+            
             modelBuilder.Entity<Prestacoes>()
                 .Property(e => e.Conta)
                 .IsFixedLength()
@@ -394,6 +394,12 @@ namespace ProjetoTCC
 
             modelBuilder.Entity<Membros>()
                 .HasMany(e => e.Arquivos)
+                .WithRequired(e => e.Membros)
+                .WillCascadeOnDelete(false);
+
+            //Adicionado
+            modelBuilder.Entity<Membros>()
+                .HasMany(e => e.Prestacoes)
                 .WithRequired(e => e.Membros)
                 .WillCascadeOnDelete(false);
 

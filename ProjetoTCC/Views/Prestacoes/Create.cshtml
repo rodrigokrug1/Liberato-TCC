@@ -80,7 +80,7 @@
                 <div class="col">
                     @Html.LabelFor(model => model.Valor, "Valor", htmlAttributes: new { @class = "control-label col" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control", @onkeypress = "$(this).mask('#.##0,00',{reverse: true})" }  })
+                        @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control", @onkeypress = "$(this).mask('#.##0,00',{reverse: true})" } })
                         @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -147,10 +147,12 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
-            $("#Sequencia").inputmask("mask", { "mask": "9999/99" });
+            $('#Sequencia').mask('9999/99');
         });
-    </script>
 
+
+
+    </script>
 
 }
 

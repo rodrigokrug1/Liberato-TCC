@@ -17,6 +17,7 @@
 
 <p>
     <button type="button" class="btn btn-dark ">@Html.ActionLink("Novo", "Create")</button>
+    <button type="button" class="btn btn-dark ">@Html.ActionLink("Gerar prestações", "GeraPrestacoes")</button>
 </p>
 
 <table class="table">
@@ -64,19 +65,19 @@
             @if (item.Situacao == "A")
             {
                 <td>
-                    <button type="button" class="btn btn-secondary btn-sm btn-block">Em aberto</button>
+                    <button type="button" class="btn btn-secondary btn-sm btn-block" disabled>Em aberto</button>
                 </td>
             }
             else if (item.Situacao == "V")
             {
                 <td>
-                    <button type="button" class="btn btn-danger btn-sm btn-block">Vencido</button>
+                    <button type="button" class="btn btn-danger btn-sm btn-block" disabled>Vencido</button>
                 </td>
             }
             else
             {
                 <td>
-                    <button type="button" class="btn btn-success btn-sm btn-block">Pago</button>
+                    <button type="button" class="btn btn-success btn-sm btn-block" disabled>Pago</button>
                 </td>
             }
 
@@ -88,3 +89,12 @@
         </tr>
     }
 </table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#item.Sequencia').mask('9999/99');
+        });
+    </script>
+}

@@ -122,3 +122,12 @@
     <button type="button" class="btn btn-dark">@Html.ActionLink("Editar", "Edit", new { chave = Model.Chave })</button>
     <button type="button" class="btn btn-secondary ">@Html.ActionLink("Voltar", "Index") </button>
 </p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+            $(document).ready(function () {
+                $('#CEP').mask('99999-999');
+            });
+    </script>
+}

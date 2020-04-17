@@ -24,9 +24,9 @@
 
         <div class="row">
             <div class="col-lg">
-                @Html.LabelFor(model => model.Matricula, htmlAttributes: new { @class = "control-label col" })
+                @Html.LabelFor(model => model.Matricula, "Matricula", htmlAttributes: new { @class = "control-label col" })
                 <div class="col">
-                    @Html.EditorFor(model => Model.Membros.Nome, new { htmlAttributes = new { @class = "form-control col-6 readonly", @readonly = "readonly" } })
+                    @Html.DropDownListFor(model => model.Matricula, null, htmlAttributes: new { @class = "form-control col-6 readonly", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.Matricula, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -108,16 +108,16 @@
         <div>
             <div class="row">
                 <div class="col">
-                    @Html.LabelFor(model => model.FormaPagamento, "FormaPagamento", htmlAttributes: new { @class = "control-label col" })
+                    @Html.LabelFor(model => model.FormaPagamento, htmlAttributes: new { @class = "control-label col" })
                     <div class="col-md-10">
-                        @Html.DropDownList("FormaPagamento", null, "Selecione", htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownListFor(Model => Model.FormaPagamento, null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.FormaPagamento, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col">
                     @Html.LabelFor(model => model.Situacao, htmlAttributes: new { @class = "control-label col" })
                     <div class="col-md-10">
-                        @Html.DropDownList("Situacao", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownListFor(Model => Model.Situacao, null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Situacao, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -145,10 +145,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
     <script>
         $(document).ready(function () {
-            $("#Sequencia").inputmask("mask", { "mask": "0000/00" });
+            $('#Sequencia').mask('9999/99');
         });
     </script>
 }

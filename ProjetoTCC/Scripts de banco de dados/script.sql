@@ -17,14 +17,12 @@ FOREIGN KEY(Tipo) REFERENCES tipoChave(Tipo)
 
 CREATE TABLE Contas(
 Conta CHAR(3) NOT NULL PRIMARY KEY,
---Chave VARCHAR(11) NOT NULL,
 TipoChave VARCHAR(11) NOT NULL,
 Descricao VARCHAR(30),
 Juro FLOAT,
 Multa FLOAT,
 Inativo BIT
 CONSTRAINT conta_unica UNIQUE (Conta, Chave)
---FOREIGN KEY(Chave) REFERENCES Chaves(Chave)
 FOREIGN KEY(TipoChave) REFERENCES TipoChave(Tipo)
 );
 

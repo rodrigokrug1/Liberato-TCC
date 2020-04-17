@@ -33,6 +33,9 @@ namespace ProjetoTCC
             // Validações no padrão brasileiro
             bundles.Add(new ScriptBundle("~/bundles/validations_pt-br").Include(
                       "~/Scripts/jquery.validate.custom.pt-br*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/custom").Include(
+                      "~/Scripts/custom.js"));
         }
     }
 }
