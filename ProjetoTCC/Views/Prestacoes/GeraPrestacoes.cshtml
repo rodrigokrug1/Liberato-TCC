@@ -9,7 +9,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>
         <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Prestações", "Index", "Prestacoes")</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Gerar</li>
+        <li class="breadcrumb-item active" aria-current="page">Gerar prestações</li>
     </ol>
 </nav>
 
@@ -51,7 +51,29 @@
     <div>
         <div class="row">
             <div class="col">
-                <h5>Facções</h5>
+                <h5>Chave</h5>
+                <div class="col">
+                    @Html.DropDownList("Chave", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <h4>Filtragem de membros:</h4>
+
+    <br />
+
+    <div>
+        <div class="row">
+            <div class="col">
+                <div class="form-check">
+                    @Html.RadioButton("TipoFiltro", "Faccao")
+                    <label class="form-check-label">
+                        <h5>Por facção</h5>
+                    </label>
+                </div>
                 <div class="form-check">
                     @Html.RadioButton("Faccoes", "Todas")
                     <label class="form-check-label">
@@ -69,7 +91,12 @@
                 </div>
             </div>
             <div class="col">
-                <h5>Membros</h5>
+                <div class="form-check">
+                    @Html.RadioButton("TipoFiltro", "Membros")
+                    <label class="form-check-label">
+                        <h5>Por membros</h5>
+                    </label>
+                </div>
                 <div class="form-check">
                     @Html.RadioButton("Membro", "Todos")
                     <label class="form-check-label">
@@ -127,6 +154,25 @@
         $(document).ready(function () {
             $('#PeriodoI').mask('9999/99');
             $('#PeriodoF').mask('9999/99');
+        });
+    </script>
+
+    <script>
+        $("#Conta").change(function () {
+            $.ajax({
+                url: "/Prestacoes/BuscaChave",
+                type: 'POST',
+                dataType: "json",
+                data: { Conta: $(this).val() },
+                beforeSend: function () { $("#Chave").empty(); },
+                error: function () { alert('A consulta falhou, tente novamente') },
+                success: function (chave) {
+                    for (let index in chave) {
+                        let tipo = chave[index];
+                        $("#Chave").append('<option value="' + tipo.Descricao + '">' + tipo.Chave + '</option>');
+                    };
+                }
+            });
         });
     </script>
 }

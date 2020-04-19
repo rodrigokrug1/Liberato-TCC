@@ -56,7 +56,7 @@ namespace ProjetoTCC.Controllers
                 }
                 Dropdown(faccoes);
             }
-            catch (SqlException e)
+            catch (SqlException)
             {
 
             }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace ProjetoTCC.Controllers
 {
@@ -176,7 +177,7 @@ namespace ProjetoTCC.Controllers
         }
 
         [HttpPost]
-        public ActionResult GeraPrestacoes(Prestacoes prestacoes, string PeriodoI, string PeriodoF, string Faccoes, string Membro)
+        public ActionResult GeraPrestacoes(Prestacoes prestacoes, string PeriodoI, string PeriodoF, string Faccoes, string Membro, string TipoFiltro)
         {
             try
             {
@@ -242,20 +243,20 @@ namespace ProjetoTCC.Controllers
             ViewBag.FormaPagamento = new SelectList(db.FormaPagamento, "Tipo", "Descricao");
             ViewBag.Chave = new SelectList(db.Chaves.Where(c => c.Inativo == false).Where(c => c.GeraConta == true), "Chave", "Chave");
             ViewBag.Conta = db.Contas.Where(c => c.Inativo == false)
-                .Select(c => new SelectListItem()
-                {
-                    Text = c.Conta + " - " + c.Descricao,
-                    Value = c.Conta
-                });
+            .Select(c => new SelectListItem()
+            {
+                Text = c.Conta + " - " + c.Descricao,
+                Value = c.Conta
+            });
                 
             ViewBag.Faccao = new SelectList(db.Faccoes.Where(f => f.Inativo == false), "Chave", "Chave");
             ViewBag.Situacao = new List<SelectListItem>
             {
                 new SelectListItem {Text = "Em aberto", Value = "A"},
-                new SelectListItem {Text = "Vencido", Value = "V"},
-                new SelectListItem {Text = "Pago", Value = "P"},
+                new SelectListItem {Text = "Vencida", Value = "V"},
+                new SelectListItem {Text = "Paga", Value = "P"},
+                new SelectListItem {Text = "Anulada", Value = "N"}
             };
-            //ViewBag.NrPrest = new SelectList(db.Prestacoes).Count() + 1;
         }
 
         private void Dropdown(Prestacoes prestacoes)
@@ -263,7 +264,7 @@ namespace ProjetoTCC.Controllers
             ViewBag.Matricula = new SelectList(db.Membros.Where(c => c.Inativo == false), "Matricula", "Nome",prestacoes.Matricula);
             ViewBag.FormaPagamento = new SelectList(db.FormaPagamento, "Tipo", "Descricao",prestacoes.FormaPagamento);
             ViewBag.Chave = new SelectList(db.Chaves.Where(c => c.Inativo == false).Where(c => c.GeraConta == true), "Chave", "Chave",prestacoes.Chave);
-            ViewBag.Conta = new SelectList(db.Contas.Where(c => c.Inativo == false), "Conta", "Tipo",prestacoes.Conta);
+            ViewBag.Conta = new SelectList(db.Contas.Where(c => c.Inativo == false), "Conta", "TipoChave", prestacoes.Conta);
             ViewBag.Situacao = new List<SelectListItem>
             {
                 new SelectListItem {Text = "Em aberto", Value = "A"},
@@ -275,6 +276,18 @@ namespace ProjetoTCC.Controllers
         private static void RemoveMascara(Prestacoes prestacoes, string sequencia)
         {
             prestacoes.Sequencia = sequencia.Replace("/", string.Empty);
+        }
+
+
+        public JsonResult BuscaChave(string Conta)
+        {
+            var json =
+                from chaves in db.Chaves
+                join contas in db.Contas on chaves.Tipo equals contas.Tipo
+                where contas.Conta == Conta
+                select new { chaves.Chave, chaves.Descricao };
+
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
     }
 }
