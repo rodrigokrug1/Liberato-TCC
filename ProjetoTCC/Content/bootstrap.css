@@ -152,10 +152,14 @@ sup {
   top: -.5em;
 }
 
+/*A cor original foi mudada pra banco 
+    por causa do padrão dos botões pretos.
+    Cor original: #007bff
+*/ 
 a {
-    color: #ffffff;
-    text-decoration: none;
-    background-color: transparent;
+  color: #fff;
+  text-decoration: none;
+  background-color: transparent;
 }
 
 a:hover {
@@ -2063,11 +2067,12 @@ pre code {
 }
 
 .form-control:focus {
-  color: #495057;
-  background-color: #fff;
-  border-color: #80bdff;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    color: #495057;
+    background-color: #fff;
+    border-color: #343a40;
+    outline: 0;
+    /*box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);*/
+    box-shadow: 0 0 0 0.2rem #6c757d;
 }
 
 .form-control::-webkit-input-placeholder {
@@ -2096,8 +2101,8 @@ pre code {
 }
 
 .form-control:disabled, .form-control[readonly] {
-  background-color: #e9ecef;
-  opacity: 1;
+    background-color: #c9cacc;
+    opacity: 1;
 }
 
 select.form-control:focus::-ms-value {
@@ -2537,12 +2542,10 @@ textarea.form-control {
   }
 }
 
-/*
 .btn:hover {
   color: #212529;
   text-decoration: none;
 }
-*/
 
 .btn:focus, .btn.focus {
   outline: 0;
@@ -2823,13 +2826,11 @@ fieldset:disabled a.btn {
   border-color: #343a40;
 }
 
-    /*
 .btn-dark:hover {
   color: #fff;
   background-color: #23272b;
   border-color: #1d2124;
 }
-    */
 
 .btn-dark:focus, .btn-dark.focus {
   color: #fff;
@@ -4961,15 +4962,15 @@ input[type="button"].btn-block {
 }
 
 .breadcrumb {
-display: -ms-flexbox;
-display: flex;
--ms-flex-wrap: wrap;
-flex-wrap: wrap;
-padding: 0.75rem 1rem;
-margin-bottom: 1rem;
-list-style: none;
-background-color: #343a40;
-border-radius: 0.25rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
 }
 
 .breadcrumb-item + .breadcrumb-item {
@@ -5004,29 +5005,30 @@ border-radius: 0.25rem;
 }
 
 .page-link {
-  position: relative;
-  display: block;
-  padding: 0.5rem 0.75rem;
-  margin-left: -1px;
-  line-height: 1.25;
-  color: #007bff;
-  background-color: #fff;
-  border: 1px solid #dee2e6;
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #343a40;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
 }
 
-.page-link:hover {
-  z-index: 2;
-  color: #0056b3;
-  text-decoration: none;
-  background-color: #e9ecef;
-  border-color: #dee2e6;
-}
+    .page-link:hover {
+        z-index: 2;
+        color: #343a40;
+        text-decoration: none;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
 
-.page-link:focus {
-  z-index: 3;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
+    .page-link:focus {
+        z-index: 3;
+        outline: 0;
+        /*box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);*/
+        box-shadow: 0 0 0 0.2rem #6c757d;
+    }
 
 .page-item:first-child .page-link {
   margin-left: 0;
@@ -5039,11 +5041,12 @@ border-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
 
+/*A cor original foi alterada pra ficar no padrão do sistema.*/ 
 .page-item.active .page-link {
-  z-index: 3;
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+    z-index: 3;
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
 }
 
 .page-item.disabled .page-link {
@@ -5051,7 +5054,7 @@ border-radius: 0.25rem;
   pointer-events: none;
   cursor: auto;
   background-color: #fff;
-  border-color: #dee2e6;
+  border-color: #343a40;
 }
 
 .pagination-lg .page-link {
@@ -9962,24 +9965,6 @@ button.bg-dark:focus {
   }
 }
 
-.dropdown-submenu {
-    position: relative;
-}
-
-    .dropdown-submenu a::after {
-        transform: rotate(-90deg);
-        position: absolute;
-        right: 6px;
-        top: .8em;
-    }
-
-    .dropdown-submenu .dropdown-menu {
-        top: 0;
-        left: 100%;
-        margin-left: .1rem;
-        margin-right: .1rem;
-    }
-
 @media (min-width: 768px) {
   .text-md-left {
     text-align: left !important;
@@ -10243,4 +10228,22 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+
+.dropdown-submenu {
+    position: relative;
+}
+
+    .dropdown-submenu a::after {
+        transform: rotate(-90deg);
+        position: absolute;
+        right: 6px;
+        top: .8em;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-left: .1rem;
+        margin-right: .1rem;
+    }
 /*# sourceMappingURL=bootstrap.css.map */

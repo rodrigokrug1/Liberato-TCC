@@ -23,7 +23,8 @@ namespace ProjetoTCC
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/BuscaCep.js",
                       "~/Scripts/Script.js",
-                      "~/Scripts/jquery.mask.min.js"));
+                      "~/Scripts/jquery.mask.min.js",
+                      "~/Scripts/custom.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -36,6 +37,15 @@ namespace ProjetoTCC
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                       "~/Scripts/custom.js"));
+
+            bundles.Add(new StyleBundle("~/content/toastr",
+                    "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
+                    .Include("~/Content/toastr.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/toastr",
+                    "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
+                    .Include("~/Scripts/toastr.js"));
+
         }
     }
 }

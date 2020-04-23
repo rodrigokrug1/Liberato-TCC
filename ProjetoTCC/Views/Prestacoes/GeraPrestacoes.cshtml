@@ -6,7 +6,7 @@
 
 <h2>Gerar prestações</h2>
 <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb bg-dark">
         <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>
         <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Prestações", "Index", "Prestacoes")</a></li>
         <li class="breadcrumb-item active" aria-current="page">Gerar prestações</li>
@@ -52,8 +52,8 @@
         <div class="row">
             <div class="col">
                 <h5>Chave</h5>
-                <div class="col">
-                    @Html.DropDownList("Chave", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
+                <div class="col-6">
+                    @Html.DropDownList("Chave", null, "Selecione", htmlAttributes: new { @class = "form-control col-8"})
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
                 <div class="form-check">
                     @Html.RadioButton("TipoFiltro", "Membros")
                     <label class="form-check-label">
-                        <h5>Por membros</h5>
+                        <h5>Por membro</h5>
                     </label>
                 </div>
                 <div class="form-check">

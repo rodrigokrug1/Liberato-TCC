@@ -51,6 +51,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Chaves.Add(chaves);
                     db.SaveChanges();
+                    TempData["success"] = "Registro criado com sucesso.";
                     return RedirectToAction("Index");                    
                 }
                 ViewBag.tipoChave = new SelectList(db.TipoChave.Where(c => c.Inativo == false), "tipo", "Tipo", chaves.Tipo);
@@ -96,6 +97,7 @@ namespace ProjetoTCC.Controllers
             {
                 db.Entry(Chaves1).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["success"] = "Registro editada com sucesso.";
                 return RedirectToAction("Index");
             }
 
@@ -124,6 +126,7 @@ namespace ProjetoTCC.Controllers
             Chaves Chave = db.Chaves.Find(chaves);
             db.Chaves.Remove(Chave);
             db.SaveChanges();
+            TempData["success"] = "Registro excluído com sucesso.";
             return RedirectToAction("Index");
         }
     }

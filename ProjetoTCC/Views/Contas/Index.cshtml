@@ -6,7 +6,7 @@
 
 <h2>Contas</h2>
 <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb bg-dark">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Contas</li>
     </ol>
@@ -15,43 +15,59 @@
 <p>
     <button type="button" class="btn btn-dark ">@Html.ActionLink("Novo", "Create")</button>
 </p>
-<table class="table table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Conta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tipo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Inativo)
-        </th>
-        <th></th>
-    </tr>
+<table class="table table-hover" id="mytable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Conta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inativo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Conta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tipo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Inativo)
-        </td>
-        <td>
-            <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { contas = item.Conta }) </button>
-            <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { contas = item.Conta }) </button>
-            <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { contas = item.Conta })</button>
-        </td>
-    </tr>
-}
-
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Conta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Inativo)
+                </td>
+                <td align="right">
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { contas = item.Conta }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { contas = item.Conta }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { contas = item.Conta })</button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@section Scripts {
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('#mytable').DataTable({
+                    "language": {
+                        "url": "/Content/pt-br.json"
+                    }
+                });
+            });
+    </script>
+}

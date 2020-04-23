@@ -4519,7 +4519,6 @@
 
     })));
 
-
 $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
     if (!$(this).next().hasClass('show')) {
         $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
@@ -4534,5 +4533,5 @@ $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
 
 
     return false;
-});
-//# sourceMappingURL=bootstrap.js.map
+});//# sourceMappingURL=bootstrap.js.map
+

@@ -4,10 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 
 namespace ProjetoTCC.Controllers
 {
@@ -67,6 +64,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Prestacoes.Add(prestacoes);
                     db.SaveChanges();
+                    TempData["success"] = "Prestação criada com sucesso";
                     return RedirectToAction("Index");
                 }
                 Dropdown(prestacoes);
@@ -117,6 +115,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Entry(prestacoes).State = EntityState.Modified;
                     db.SaveChanges();
+                    TempData["success"] = "Prestação editada com sucesso";
                     return RedirectToAction("Index");
                 }
                 Dropdown(prestacoes);
@@ -162,6 +161,7 @@ namespace ProjetoTCC.Controllers
                 Prestacoes prestacoes = db.Prestacoes.Find(nrPrest);
                 db.Prestacoes.Remove(prestacoes);
                 db.SaveChanges();
+                TempData["success"] = "Prestação excluída com sucesso";
                 return RedirectToAction("Index");
             }
             catch
@@ -177,13 +177,52 @@ namespace ProjetoTCC.Controllers
         }
 
         [HttpPost]
-        public ActionResult GeraPrestacoes(Prestacoes prestacoes, string PeriodoI, string PeriodoF, string Faccoes, string Membro, string TipoFiltro)
+        public ActionResult GeraPrestacoes(Prestacoes prestacoes, string Faccao, string PeriodoI, string PeriodoF, string Faccoes, string Membro, string TipoFiltro)
         {
             try
             {
+                // Validações
+                //if (PeriodoI == "" || PeriodoF == "")
+                //{
+                //    TempData["warning"] = "Informe o período inicial e final";
+                //    return View();
+                //}
+
+                //if (string.IsNullOrEmpty(prestacoes.Conta))
+                //{
+                //    TempData["warning"] = "Selecione a conta para geração";
+                //    return View();
+                //}
+
+                //if (string.IsNullOrEmpty(prestacoes.Conta))
+                //{
+                //    TempData["warning"] = "Selecione a chave para geração";
+                //    return View();
+                //}
+
+                //if (TipoFiltro == null)
+                //{
+                //    TempData["warning"] = "Selecione o filtro por facção ou por membros";
+                //    return View();
+                //}
+
+                //if (Membro == null)
+                //{
+                //    TempData["warning"] = "Selecione o filtro por facção ou por membros";
+                //    return View();
+                //}
+
+                //if (Faccoes == null)
+                //{
+                //    TempData["warning"] = "Selecione o filtro por facção ou por membros";
+                //    return View();
+                //}
+
+
+                // Conversão do período em número para cálculo do intervalo de geração de prestações
                 PeriodoI = PeriodoI.Replace("/", string.Empty);
                 PeriodoF = PeriodoF.Replace("/", string.Empty);
-
+                               
                 string DataMesStr = PeriodoI.Substring(4, 2);
                 string DataAnoStr = PeriodoI.Substring(0, 4);
                 
@@ -194,8 +233,46 @@ namespace ProjetoTCC.Controllers
 
                 int x = Convert.ToInt32(PeriodoF);
                 int y = Convert.ToInt32(PeriodoI);
+
+                if (y > x)
+                {
+                    TempData["warning"] = "Período final não pode ser inferior ao inicial";
+                    return View();
+                }
                 
+                //if (TipoFiltro == "Faccao")
+                //{
+                //    if (Faccoes == "Selecionada")
+                //    {
+
+                //    }
+                //    else
+                //    {
+
+                //    }
+                //}
+                //else
+                //{
+                //    if (Membro == "Todos")
+                //    {
+
+                //    }
+                //    else
+                //    {
+
+                //    }
+
+                //}
+
                 int z = x - y;
+                               
+                var Matricula =
+                    from membros in db.Membros
+                    //where membros.Matricula == prestacoes.Matricula
+                    where membros.Faccao == Faccao
+                    select new { membros.Matricula };
+                    
+
                 
                 for (int i = 0; i <= z; i++)
                 {
@@ -214,6 +291,8 @@ namespace ProjetoTCC.Controllers
                         db.SaveChanges();
                     };
                 }
+                Dropdown(prestacoes);
+                TempData["success"] = "Rotina de executada com sucesso";
                 return RedirectToAction("Index");
             }
             catch (DbEntityValidationException e)

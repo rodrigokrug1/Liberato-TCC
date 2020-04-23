@@ -9,7 +9,7 @@
 <h2>Prestações</h2>
 
 <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb bg-dark">
         <li class="breadcrumb-item"><a href="#"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></a></li>
         <li class="breadcrumb-item active" aria-current="page">Prestações</li>
     </ol>
@@ -20,81 +20,88 @@
     <button type="button" class="btn btn-dark ">@Html.ActionLink("Gerar prestações", "GeraPrestacoes")</button>
 </p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Membros.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Conta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Chave)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sequencia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DtVencimento)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Situacao)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table table-hover" id="mytable">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Membros.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contas.Tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Chave)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sequencia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DtVencimento)
-            </td>
-
-            @if (item.Situacao == "A")
-            {
-                <td>
-                    <button type="button" class="btn btn-secondary btn-sm btn-block" disabled>Em aberto</button>
-                </td>
-            }
-            else if (item.Situacao == "V")
-            {
-                <td>
-                    <button type="button" class="btn btn-danger btn-sm btn-block" disabled>Vencido</button>
-                </td>
-            }
-            else
-            {
-                <td>
-                    <button type="button" class="btn btn-success btn-sm btn-block" disabled>Pago</button>
-                </td>
-            }
-
-            <td>
-                <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { nrPrest = item.Nrprest }) </button>
-                <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { nrPrest = item.Nrprest }) </button>
-                <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { nrPrest = item.Nrprest }) </button>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Membros.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Conta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chave)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sequencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DtVencimento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Situacao)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Membros.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contas.Conta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Chave)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sequencia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DtVencimento)
+                </td>
+
+                @if (item.Situacao == "A")
+                {
+                    <td>
+                        <button type="button" class="btn btn-secondary btn-sm btn-block" disabled>Em aberto</button>
+                    </td>
+                }
+                else if (item.Situacao == "V")
+                {
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm btn-block" disabled>Vencido</button>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <button type="button" class="btn btn-success btn-sm btn-block" disabled>Pago</button>
+                    </td>
+                }
+
+                <td align="right">
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { nrPrest = item.Nrprest }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { nrPrest = item.Nrprest }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { nrPrest = item.Nrprest }) </button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
-            $('#item.Sequencia').mask('9999/99');
+            $('#mytable').DataTable({
+                "language": {
+                    "url": "/Content/pt-br.json"
+                }
+            });
         });
     </script>
 }

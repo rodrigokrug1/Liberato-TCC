@@ -31,6 +31,7 @@ namespace ProjetoTCC.Controllers
             {
                 return HttpNotFound();
             }
+            Dropdown();
             return View(membros);
         }
 
@@ -150,10 +151,9 @@ namespace ProjetoTCC.Controllers
         {
             ViewBag.Graduacao = new SelectList(db.Chaves.Where(c => c.Tipo == "Graduação").Where(c => c.Inativo == false), "Chave", "Chave");
             ViewBag.Faccao = new SelectList(db.Faccoes.Where(f => f.Inativo == false), "Chave", "Chave");
-            //ViewBag.Motocicleta = new SelectList(db.Motos, "Id", "Modelo");
             ViewBag.Motocicleta = db.Motos.Select(m => new SelectListItem()
             {
-                Text = m.Marca + " " + m.Modelo,
+                Text = m.Marca + " " + m.Modelo + " " + m.Cilindrada.TrimEnd() + "cc",
                 Value = m.Id.ToString()
             });
 
@@ -231,5 +231,7 @@ namespace ProjetoTCC.Controllers
             membros.Telefone = telefone.Replace("(", string.Empty).Replace(")", string.Empty).Replace(" ", string.Empty).Replace("-", string.Empty);
             membros.Celular = celular.Replace("(", string.Empty).Replace(")", string.Empty).Replace(" ", string.Empty).Replace("-", string.Empty);
         }
+
+
     }
 }

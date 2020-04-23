@@ -6,7 +6,7 @@
 
 <h2>Membros</h2>
 <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb bg-dark">
         <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>
         <li class="breadcrumb-item active" aria-current="page">Membros</li>
     </ol>
@@ -15,58 +15,66 @@
 <p>
     <button type="button" class="btn btn-dark ">@Html.ActionLink("Novo", "Create")</button>
 </p>
-<table class="table table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Apelido)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Graduacao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Faccao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Inativo)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table table-hover" id="mytable">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apelido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Graduacao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Faccao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Inativo)
-            </td>
-            <td>
-                <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { matricula = item.Matricula }) </button>
-                <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { matricula = item.Matricula }) </button>
-                <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { matricula = item.Matricula }) </button>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apelido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Graduacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Faccao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inativo)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apelido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Graduacao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Faccao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Inativo)
+                </td>
+                <td align="right">
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { matricula = item.Matricula }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { matricula = item.Matricula }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { matricula = item.Matricula }) </button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
-            $('#Sequencia').mask('9999/99');
+            $('#mytable').DataTable({
+                "language": {
+                    "url": "/Content/pt-br.json"
+                }
+            });
         });
     </script>
 }

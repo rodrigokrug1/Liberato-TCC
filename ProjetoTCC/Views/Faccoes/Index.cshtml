@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<ProjetoTCC.Faccoes>
 
 @{
-                ViewBag.Title = "Index";
+    ViewBag.Title = "Index";
 }
 
 <h2>Facções</h2>
 <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb bg-dark">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Facções</li>
     </ol>
@@ -15,49 +15,65 @@
 <p>
     <button type="button" class="btn btn-dark ">@Html.ActionLink("Novo", "Create")</button>
 </p>
-<table class="table table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Chaves.Chave)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cidade)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UF)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Inativo)
-        </th>
-        <th></th>
-    </tr>
+<table class="table table-hover" id="mytable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Chaves.Chave)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inativo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-    @foreach (var item in Model)
-    {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Chaves.Chave)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Descricao)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Cidade)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.UF)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Inativo)
-    </td>
-    <td>
-        <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { chave = item.Chave }) </button>
-        <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { chave = item.Chave }) </button>
-        <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { chave = item.Chave }) </button>
-    </td>
-</tr>
-}
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Chaves.Chave)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UF)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Inativo)
+                </td>
+                <td align="right">
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { chave = item.Chave }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { chave = item.Chave }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { chave = item.Chave }) </button>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@section Scripts {
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('#mytable').DataTable({
+                    "language": {
+                        "url": "/Content/pt-br.json"
+                    }
+                });
+            });
+    </script>
+}

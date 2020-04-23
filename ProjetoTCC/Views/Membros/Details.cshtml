@@ -6,7 +6,7 @@
 
 <h2>Detalhes do membro</h2>
 <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb bg-dark">
         <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>,
         <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Membros", "Index", "Membros")</a></li>
         <li class="breadcrumb-item active" aria-current="page">Detalhes</li>
@@ -280,7 +280,7 @@
             <div class="col">
                 @Html.LabelFor(model => model.Motocicleta, "Motocicleta", htmlAttributes: new { @class = "control-label col" })
                 <div class="col">
-                    @Html.EditorFor(model => model.Motos.Modelo, new { htmlAttributes = new { @class = "form-control readonly", @readonly = "readonly" } })
+                    @Html.DropDownListFor(model => model.Motocicleta, null, htmlAttributes: new { @class = "form-control col", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.Motocicleta, "", new { @class = "text-danger" })
                 </div>
             </div>
