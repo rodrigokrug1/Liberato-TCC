@@ -1,7 +1,9 @@
 ﻿@model ProjetoTCC.Prestacoes
 
 @{
-    ViewBag.Title = "Criar";
+                /**/
+
+                ViewBag.Title = "Criar";
 }
 
 <h2>Criar prestação</h2>
@@ -12,7 +14,6 @@
         <li class="breadcrumb-item active" aria-current="page">Membros</li>
     </ol>
 </nav>
-
 
 @using (Html.BeginForm())
 {
@@ -71,7 +72,7 @@
         <div method="post" action=".">
             <div class="row">
                 <div class="col" me>
-                    @Html.LabelFor(model => model.Chave, "Chave", htmlAttributes: new { @class = "control-label col"})
+                    @Html.LabelFor(model => model.Chave, "Chave", htmlAttributes: new { @class = "control-label col" })
                     <div class="col-md-10">
                         @Html.DropDownList("Chave", null, "Selecione", htmlAttributes: new { @class = "form-control", id = "Chave" })
                         @Html.ValidationMessageFor(model => model.Chave, "", new { @class = "text-danger" })
@@ -146,31 +147,30 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-    
     <script>
         $(document).ready(function () {
             $('#Sequencia').mask('9999/99');
         });
-    </script>
+    </script>    
     
-
     <script>
-        $("#Conta").change(function () {
+        $('#Conta').change(function () {
             $.ajax({
                 url: "/Prestacoes/BuscaChave",
                 type: 'POST',
                 dataType: "json",
                 data: { Conta: $(this).val() },
-              beforeSend : function(){ $("#Chave").empty(); },
-              error: function(){ alert('A consulta falhou, tente novamente') },
+                beforeSend: function () { $("#Chave").empty(); },
+                error: function () { alert('A consulta falhou, tente novamente') },
                 success: function (chave) {
-                    for (let index in chave ) {
+                    for (let index in chave) {
                         let tipo = chave[index];
-                        $("#Chave").append('<option value="' + tipo.Descricao + '">' + tipo.Chave + '</option>');
+                        $("#Chave").append('<option value="' + tipo.Chave + '">' + tipo.Chave + '</option>');
                     };
                 }
             });
         });
+
     </script>
 }
 

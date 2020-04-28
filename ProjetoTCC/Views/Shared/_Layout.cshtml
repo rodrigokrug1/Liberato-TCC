@@ -56,6 +56,11 @@
         </script>*@
 </head>
 <body>
+    <input type="hidden" id="success" value="@TempData["success"]" />
+    <input type="hidden" id="info" value="@TempData["info"]" />
+    <input type="hidden" id="warning" value="@TempData["warning"]" />
+    <input type="hidden" id="error" value="@TempData["error"]" />
+
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <a class="navbar-brand">
             <img src="~/img/logo.png" width="50" height="55" />
@@ -125,26 +130,24 @@
         @RenderBody()
 
     </div>
-    <hr />
-    <footer>
-        <div class="container">
-            <span class="text-muted">®@DateTime.Now.Year - VS Valesoft</span>
-        </div>
-    </footer>
+
+    @*<footer>
+                <hr />
+            <div class="container">
+                <span class="text-muted">®@DateTime.Now.Year - VS Valesoft</span>
+            </div>
+        </footer>*@
     <br />
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/validations_pt-br")
-    @Scripts.Render("~/bundles/toastr")    
+    @Scripts.Render("~/bundles/toastr")
     @RenderSection("scripts", required: false)
 
     <script src="~/Scripts/datatables.min.js"></script>
 
-    <input type="hidden" id="success" value="@TempData["success"]" />
-    <input type="hidden" id="info" value="@TempData["info"]" />
-    <input type="hidden" id="warning" value="@TempData["warning"]" />
-    <input type="hidden" id="error" value="@TempData["error"]" />
+
 
 </body>
 </html>

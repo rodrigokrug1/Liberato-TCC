@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -232,6 +235,48 @@ namespace ProjetoTCC.Controllers
             membros.Celular = celular.Replace("(", string.Empty).Replace(")", string.Empty).Replace(" ", string.Empty).Replace("-", string.Empty);
         }
 
+        [HttpPost]
+        public JsonResult ValidaCPF(string CPF)
+            {
+            using
+            (
+                var connection = new SqlConnection("data source=LOCALHOST\\SQLEXPRESS;initial catalog=EstudoTCC;user id=sa;password=gyq27r2fd7")
+            )
+            {
+                connection.Open();
+                try
+                {
+                    CPF = CPF.Replace(".", string.Empty).Replace("-", string.Empty);
 
+                    var retorno = connection.ExecuteScalar<int>("SELECT dbo.FC_VALIDA_CNPJCPF("+CPF+")");
+
+                    if (retorno != 1)
+                    {
+                        TempData["error"] = "CPF inválido";
+                    }
+
+                    return Json(retorno, JsonRequestBehavior.AllowGet);
+                }
+                
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var eve in ex.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }

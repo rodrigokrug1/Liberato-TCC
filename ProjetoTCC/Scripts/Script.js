@@ -22,14 +22,22 @@ birthField.addEventListener('change', (event) => {
     ageField.value = getAge(date) + ' anos'
 })
 
-/*
-function Idade() {
-    hoje = new Date;
-    nascimento = new Date($("#dtnascimento").val());
-    var diferencaAnos = hoje.getFullYear() - nascimento.getFullYear();
-    if (new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()) <
-        new Date(hoje.getFullYear(), nascimento.getMonth(), nascimento.getDate()))
-        diferencaAnos--;
-    alert(diferencaAnos);
-}  
-*/
+//### Validação de CPF ###
+$('#CPF').change(function () {
+    var cpf = $(this).val();
+    var data = {
+        CPF: cpf
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Membros/ValidaCPF',
+        data: data,
+        error: function () { alert('Não foi possível verificar o CPF')},
+        success: function (data) {
+            if (data !== 1) {
+                alert('(@TempData["error"])');
+            }
+            $('#CPF').focus();            
+        }
+    });
+});

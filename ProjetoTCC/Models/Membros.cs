@@ -15,6 +15,11 @@ namespace ProjetoTCC
             Prestacoes = new HashSet<Prestacoes>();
         }
 
+        public Membros( int matricula)
+        {
+            Matricula = matricula;
+        }
+
         [Key]
         public int Matricula { get; set; }
 

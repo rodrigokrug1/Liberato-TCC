@@ -1,1 +1,36 @@
-﻿
+﻿@{
+    /**/
+
+    ViewBag.Title = "Home";
+}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">VS Sagittarius</h1>
+        <p class="lead">Projeto em desenvolvimento para apresentação do trabalho de conclusão para o curso Técnico em Informática para Internet da Escola Técnica Liberato.</p>
+    </div>
+</div>
+
+<section class="dashboard">
+    <div class="dashboard-numero"><strong>@ViewBag.Membros</strong></div>
+    <div class="dashboard-texto">Membros</div>
+</section>
+
+<section class="dashboard sem-borda">
+    <div class="dashboard-mini-top">
+        <strong>Escudos</strong>
+        </br>@ViewBag.Escudos
+        </br>membros
+    </div>
+    <div class="dashboard-mini-mid">
+        <strong>Prósperos</strong>
+        </br>@ViewBag.PP
+        </br>membros
+    </div>
+    <div class="dashboard-mini-bot">
+        <strong>Facções</strong>
+        </br>@ViewBag.Faccoes
+        </br>cidades
+    </div>
+</section>
+

@@ -24,13 +24,13 @@
     <div>
         <div class="row">
             <div class="col">
-                <h5>Conta</h5>
+                <h6>Conta</h6>
                 <div class="col">
                     @Html.DropDownList("Conta", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
                 </div>
             </div>
             <div class="col">
-                <h5>Período</h5>
+                <h6>Sequência</h6>
                 <div class="col-md-7">
                     <div class="row">
                         <div class="col px-lg-3">
@@ -45,15 +45,13 @@
             </div>
         </div>
     </div>
-
     <br />
-
     <div>
         <div class="row">
             <div class="col">
-                <h5>Chave</h5>
+                <h6>Chave</h6>
                 <div class="col-6">
-                    @Html.DropDownList("Chave", null, "Selecione", htmlAttributes: new { @class = "form-control col-8"})
+                    @Html.DropDownList("Chave", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
                 </div>
             </div>
         </div>
@@ -66,54 +64,41 @@
     <br />
 
     <div>
+
         <div class="row">
             <div class="col">
-                <div class="form-check">
-                    @Html.RadioButton("TipoFiltro", "Faccao")
-                    <label class="form-check-label">
-                        <h5>Por facção</h5>
-                    </label>
-                </div>
-                <div class="form-check">
-                    @Html.RadioButton("Faccoes", "Todas")
-                    <label class="form-check-label">
-                        Todas as facções
-                    </label>
-                </div>
-                <div class="form-check">
-                    @Html.RadioButton("Faccoes", "Selecionada")
-                    <label class="form-check-label">
-                        Facção selecionada
-                    </label>
-                    <div class="col-">
-                        @Html.DropDownList("Faccao", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
-                    </div>
-                </div>
+                @Html.RadioButton("TipoFiltro", "Todos")
+                <label class="form-check-label">
+                    <h6>Para todos os membros</h6>
+                </label>
+
             </div>
+        </div>
+        <div class="row">
             <div class="col">
-                <div class="form-check">
-                    @Html.RadioButton("TipoFiltro", "Membros")
-                    <label class="form-check-label">
-                        <h5>Por membro</h5>
-                    </label>
-                </div>
-                <div class="form-check">
-                    @Html.RadioButton("Membro", "Todos")
-                    <label class="form-check-label">
-                        Todos os membros da facção selecionada
-                    </label>
-                </div>
-                <div class="form-check">
-                    @Html.RadioButton("Membro", "Selecionado")
-                    <label class="form-check-label">
-                        Membro selecionado
-                    </label>
-                    <div class="col-">
-                        @Html.DropDownList("Matricula", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
-                    </div>
+                @Html.RadioButton("TipoFiltro", "PorMembro")
+                <label class="form-check-label">
+                    <h6>Por membro</h6>
+                </label>
+                <div class="col">
+                    @Html.DropDownList("Matricula", null, "Selecione", htmlAttributes: new { @class = "form-control col-4" })
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col">
+                @Html.RadioButton("TipoFiltro", "PorFaccao")
+                <label class="form-check-label">
+                    <h6>Por facção</h6>
+                </label>
+                <div class="col">
+                    @Html.DropDownList("Faccao", null, "Selecione", htmlAttributes: new { @class = "form-control col-4" })
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <hr />
@@ -169,7 +154,7 @@
                 success: function (chave) {
                     for (let index in chave) {
                         let tipo = chave[index];
-                        $("#Chave").append('<option value="' + tipo.Descricao + '">' + tipo.Chave + '</option>');
+                        $("#Chave").append('<option value="' + tipo.Chave + '">' + tipo.Chave + '</option>');
                     };
                 }
             });

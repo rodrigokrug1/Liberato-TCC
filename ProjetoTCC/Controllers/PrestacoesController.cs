@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Dapper;
 
 namespace ProjetoTCC.Controllers
 {
@@ -19,7 +23,7 @@ namespace ProjetoTCC.Controllers
             return View(db.Prestacoes.ToList());
         }
 
-        private static void MascaraSequencia (Prestacoes prestacoes)
+        private static void MascaraSequencia(Prestacoes prestacoes)
         {
             string esquerda = prestacoes.Sequencia.Substring(0, 4);
             string direita = prestacoes.Sequencia.Substring(5, 6);
@@ -49,7 +53,7 @@ namespace ProjetoTCC.Controllers
             prest.DtVencimento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 5);
             Dropdown();
             ViewBag.NrPrest = new SelectList(db.Prestacoes).Count() + 1;
-            return View(prest);            
+            return View(prest);
         }
 
         // POST: Prestacoes/Create
@@ -177,143 +181,163 @@ namespace ProjetoTCC.Controllers
         }
 
         [HttpPost]
-        public ActionResult GeraPrestacoes(Prestacoes prestacoes, string Faccao, string PeriodoI, string PeriodoF, string Faccoes, string Membro, string TipoFiltro)
+        public ActionResult GeraPrestacoes(Prestacoes prestacoes, string PeriodoI, string PeriodoF, string TipoFiltro, string Faccao)
         {
-            try
+            //Validações
+            if (string.IsNullOrEmpty(PeriodoI) || string.IsNullOrEmpty(PeriodoF))
             {
-                // Validações
-                //if (PeriodoI == "" || PeriodoF == "")
-                //{
-                //    TempData["warning"] = "Informe o período inicial e final";
-                //    return View();
-                //}
-
-                //if (string.IsNullOrEmpty(prestacoes.Conta))
-                //{
-                //    TempData["warning"] = "Selecione a conta para geração";
-                //    return View();
-                //}
-
-                //if (string.IsNullOrEmpty(prestacoes.Conta))
-                //{
-                //    TempData["warning"] = "Selecione a chave para geração";
-                //    return View();
-                //}
-
-                //if (TipoFiltro == null)
-                //{
-                //    TempData["warning"] = "Selecione o filtro por facção ou por membros";
-                //    return View();
-                //}
-
-                //if (Membro == null)
-                //{
-                //    TempData["warning"] = "Selecione o filtro por facção ou por membros";
-                //    return View();
-                //}
-
-                //if (Faccoes == null)
-                //{
-                //    TempData["warning"] = "Selecione o filtro por facção ou por membros";
-                //    return View();
-                //}
-
-
-                // Conversão do período em número para cálculo do intervalo de geração de prestações
-                PeriodoI = PeriodoI.Replace("/", string.Empty);
-                PeriodoF = PeriodoF.Replace("/", string.Empty);
-                               
-                string DataMesStr = PeriodoI.Substring(4, 2);
-                string DataAnoStr = PeriodoI.Substring(0, 4);
-                
-                int DataAnoInt = Convert.ToInt32(DataAnoStr);
-                int DataMesInt = Convert.ToInt32(DataMesStr);
-
-                DateTime VencimentoInicial = new DateTime(DataAnoInt, DataMesInt, 5);
-
-                int x = Convert.ToInt32(PeriodoF);
-                int y = Convert.ToInt32(PeriodoI);
-
-                if (y > x)
-                {
-                    TempData["warning"] = "Período final não pode ser inferior ao inicial";
-                    return View();
-                }
-                
-                //if (TipoFiltro == "Faccao")
-                //{
-                //    if (Faccoes == "Selecionada")
-                //    {
-
-                //    }
-                //    else
-                //    {
-
-                //    }
-                //}
-                //else
-                //{
-                //    if (Membro == "Todos")
-                //    {
-
-                //    }
-                //    else
-                //    {
-
-                //    }
-
-                //}
-
-                int z = x - y;
-                               
-                var Matricula =
-                    from membros in db.Membros
-                    //where membros.Matricula == prestacoes.Matricula
-                    where membros.Faccao == Faccao
-                    select new { membros.Matricula };
-                    
-
-                
-                for (int i = 0; i <= z; i++)
-                {
-                    if (ModelState.IsValid)
-                    {
-                        Prestacoes prest = new Prestacoes
-                        {
-                            Matricula = prestacoes.Matricula,
-                            Conta = prestacoes.Conta,
-                            Chave = prestacoes.Chave,
-                            Sequencia = VencimentoInicial.AddMonths(i).ToString("yyyyMM"),
-                            DtVencimento = VencimentoInicial.AddMonths(i),
-                            Situacao = "A"
-                        };
-                        db.Prestacoes.Add(prest);
-                        db.SaveChanges();
-                    };
-                }
-                Dropdown(prestacoes);
-                TempData["success"] = "Rotina de executada com sucesso";
-                return RedirectToAction("Index");
+                TempData["warning"] = "Informe os períodos inicial e final";
+                return View();
             }
-            catch (DbEntityValidationException e)
+
+            PeriodoI = PeriodoI.Replace("/", string.Empty);
+            PeriodoF = PeriodoF.Replace("/", string.Empty);
+
+            int x = Convert.ToInt32(PeriodoF);
+            int y = Convert.ToInt32(PeriodoI);
+
+            if (y > x)
             {
-                foreach (var eve in e.EntityValidationErrors)
+                TempData["warning"] = "Período final não pode ser inferior ao inicial";
+                return View();
+            }
+
+            if (string.IsNullOrEmpty(prestacoes.Conta))
+            {
+                TempData["warning"] = "Selecione a conta para geração";
+                return View();
+            }
+
+            if (string.IsNullOrEmpty(prestacoes.Chave))
+            {
+                TempData["warning"] = "Selecione a chave para geração";
+                return View();
+            }
+
+            if (string.IsNullOrEmpty(TipoFiltro))
+            {
+                TempData["warning"] = "Selecione o filtro por facção ou por membros";
+                return View();
+            }
+
+            if (TipoFiltro == "PorMembro" && prestacoes.Matricula == 0)
+            {
+                TempData["error"] = "Selecione o membro de acordo com o filtro selecionado";
+            }
+
+            if (TipoFiltro == "PorFaccao" && string.IsNullOrEmpty(Faccao))
+            {
+                TempData["error"] = "Selecione a facção de acordo com o filtro selecionado";
+            }
+
+            CalculaPeriodo(PeriodoI, PeriodoF, out DateTime VencimentoInicial, out int f);
+
+            string where = Where(TipoFiltro);
+
+            using
+            (
+                var connection = new SqlConnection("data source=LOCALHOST\\SQLEXPRESS;initial catalog=EstudoTCC;user id=sa;password=gyq27r2fd7")
+            )
+            {
+                connection.Open();
+                try
                 {
-                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                    foreach (var ve in eve.ValidationErrors)
+                    var membros = connection
+                        .Query<Membros>("SELECT Matricula FROM Membros WITH (NOLOCK) WHERE " + where + ";", new { Fac = Faccao, Mat = prestacoes.Matricula });
+
+                    foreach (dynamic matricula in membros)
                     {
-                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
+                        for (int i = 1; i <= f; i++)
+                        {
+                            Prestacoes prest = new Prestacoes
+                            {
+                                Matricula = matricula.Matricula,
+                                Conta = prestacoes.Conta,
+                                Chave = prestacoes.Chave,
+                                Sequencia = VencimentoInicial.AddMonths(i).ToString("yyyyMM"),
+                                DtVencimento = VencimentoInicial.AddMonths(i),
+                                Situacao = "A"
+                            };
+                            db.Prestacoes.Add(prest);
+                            db.SaveChanges();
+                        }
                     }
                 }
-                throw;
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var eve in ex.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            Dropdown(prestacoes);
+            TempData["success"] = "Rotina de executada com sucesso";
+            return RedirectToAction("Index");
+        }
+
+        private static void CalculaPeriodo(string PeriodoI, string PeriodoF, out DateTime VencimentoInicial, out int f)
+        {
+            // Separa o ano do mês do Periodo inicial
+            string MesIni = PeriodoI.Substring(4, 2);
+            string AnoIni = PeriodoI.Substring(0, 4);
+
+            int AnoIniInt = Convert.ToInt32(AnoIni);
+            int MesIniInt = Convert.ToInt32(MesIni);
+
+            // Separa o ano do mês do Periodo final
+            string MesFin = PeriodoF.Substring(4, 2);
+            string AnoFin = PeriodoF.Substring(0, 4);
+
+            int AnoFinInt = Convert.ToInt32(AnoFin);
+            int MesFinInt = Convert.ToInt32(MesFin);
+
+            // Primeiro vencimento da mensalidade é o dia 5 correspondendo ao período inicial
+            VencimentoInicial = new DateTime(AnoIniInt, MesIniInt, 5);
+
+            if (PeriodoI == PeriodoF)
+            {
+                f = 1;
+            }
+            else
+            {
+                int a = (AnoFinInt - AnoIniInt) * 12;
+                int b = Math.Abs(MesFinInt - MesIniInt);
+
+                // Operador ternário: se o mês inicial for menor que o mês final, faz a soma, senão, faz subtração
+                f = (MesIniInt < MesFinInt ? a + b : a - b);
             }
         }
 
-        private void ValidaDuplicidade(int matricula, string conta, string sequencia)
+        private static string Where(string TipoFiltro)
         {
+            // Monta a clausula Where da consulta
+            string where = "";
 
+            if (TipoFiltro == "PorFaccao")
+            {
+                where = "Faccao = @Fac";
+            }
+            if (TipoFiltro == "PorMembro")
+            {
+                where = "Matricula = @Mat";
+            }
+            else
+            {
+                where = "1=1";
+            }
+            return where;
         }
 
         private void Dropdown()
@@ -327,7 +351,7 @@ namespace ProjetoTCC.Controllers
                 Text = c.Conta + " - " + c.Descricao,
                 Value = c.Conta
             });
-                
+
             ViewBag.Faccao = new SelectList(db.Faccoes.Where(f => f.Inativo == false), "Chave", "Chave");
             ViewBag.Situacao = new List<SelectListItem>
             {
@@ -340,10 +364,11 @@ namespace ProjetoTCC.Controllers
 
         private void Dropdown(Prestacoes prestacoes)
         {
-            ViewBag.Matricula = new SelectList(db.Membros.Where(c => c.Inativo == false), "Matricula", "Nome",prestacoes.Matricula);
-            ViewBag.FormaPagamento = new SelectList(db.FormaPagamento, "Tipo", "Descricao",prestacoes.FormaPagamento);
-            ViewBag.Chave = new SelectList(db.Chaves.Where(c => c.Inativo == false).Where(c => c.GeraConta == true), "Chave", "Chave",prestacoes.Chave);
+            ViewBag.Matricula = new SelectList(db.Membros.Where(c => c.Inativo == false), "Matricula", "Nome", prestacoes.Matricula);
+            ViewBag.FormaPagamento = new SelectList(db.FormaPagamento, "Tipo", "Descricao", prestacoes.FormaPagamento);
+            ViewBag.Chave = new SelectList(db.Chaves.Where(c => c.Inativo == false).Where(c => c.GeraConta == true), "Chave", "Chave", prestacoes.Chave);
             ViewBag.Conta = new SelectList(db.Contas.Where(c => c.Inativo == false), "Conta", "TipoChave", prestacoes.Conta);
+            ViewBag.Faccao = new SelectList(db.Faccoes.Where(f => f.Inativo == false), "Chave", "Chave");
             ViewBag.Situacao = new List<SelectListItem>
             {
                 new SelectListItem {Text = "Em aberto", Value = "A"},
@@ -356,7 +381,6 @@ namespace ProjetoTCC.Controllers
         {
             prestacoes.Sequencia = sequencia.Replace("/", string.Empty);
         }
-
 
         public JsonResult BuscaChave(string Conta)
         {

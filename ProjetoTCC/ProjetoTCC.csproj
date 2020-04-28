@@ -214,6 +214,7 @@
     <Content Include="img\DataTables\sort_desc.png" />
     <Content Include="img\DataTables\sort_desc_disabled.png" />
     <Content Include="img\logo.png" />
+    <Content Include="Scripts de banco de dados\FC_VALIDA_CNPJCPF.sql" />
     <Content Include="Scripts de banco de dados\script.sql" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

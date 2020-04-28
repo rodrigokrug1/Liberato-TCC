@@ -127,7 +127,7 @@ Situacao CHAR(1),
 FormaPagamento CHAR(1),
 Obs VARCHAR(100),
 Ass VARCHAR(100)
-CONSTRAINT prest_unica UNIQUE (NrPrest, Matricula)
+CONSTRAINT prest_unica UNIQUE (Matricula, conta, chave, sequencia)
 FOREIGN KEY(Matricula) REFERENCES Membros(Matricula),
 FOREIGN KEY(FormaPagamento) REFERENCES FormaPagamento(Tipo),
 FOREIGN KEY(Chave) REFERENCES Chaves(Chave),
