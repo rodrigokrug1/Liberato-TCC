@@ -4,10 +4,24 @@ namespace ProjetoTCC
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
     using System.Data.Entity.Spatial;
+    using System.Linq;
+    using System.Linq.Expressions;
 
     public partial class Prestacoes
     {
+        private dynamic nrPrest;
+
+        public Prestacoes()
+        {
+        }
+
+        public Prestacoes(dynamic nrPrest)
+        {
+            this.nrPrest = nrPrest;
+        }
+
         [Key]
         [Display(Name = "Número")]
         public int Nrprest { get; set; }

@@ -23,7 +23,7 @@ birthField.addEventListener('change', (event) => {
 })
 
 //### Validação de CPF ###
-$('#CPF').change(function () {
+$('#CPF').focusout(function () {
     var cpf = $(this).val();
     var data = {
         CPF: cpf
@@ -32,12 +32,11 @@ $('#CPF').change(function () {
         type: 'POST',
         url: '/Membros/ValidaCPF',
         data: data,
-        error: function () { alert('Não foi possível verificar o CPF')},
+        error: function () { toastr.error("Não foi possível verificar o CPF") },
         success: function (data) {
             if (data !== 1) {
-                alert('(@TempData["error"])');
-            }
-            $('#CPF').focus();            
+                toastr.error("CPF inválido");
+            }                      
         }
     });
 });

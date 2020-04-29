@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using ProjetoTCC.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Dapper;
+using System.Threading;
 
 namespace ProjetoTCC.Controllers
 {
@@ -243,7 +244,8 @@ namespace ProjetoTCC.Controllers
                 try
                 {
                     var membros = connection
-                        .Query<Membros>("SELECT Matricula FROM Membros WITH (NOLOCK) WHERE " + where + ";", new { Fac = Faccao, Mat = prestacoes.Matricula });
+                        .Query<Membros>("SELECT Matricula FROM Membros(NOLOCK) WHERE " + where + ";", 
+                            new { Fac = Faccao, Mat = prestacoes.Matricula });
 
                     foreach (dynamic matricula in membros)
                     {
@@ -258,8 +260,21 @@ namespace ProjetoTCC.Controllers
                                 DtVencimento = VencimentoInicial.AddMonths(i),
                                 Situacao = "A"
                             };
-                            db.Prestacoes.Add(prest);
-                            db.SaveChanges();
+
+                            var prestacao = connection
+                                .Query<Prestacoes>("SELECT TOP 1 NrPrest FROM Prestacoes(NOLOCK) WHERE Matricula = @Matricula AND Conta = @Conta AND Chave = @Chave AND Sequencia = @Sequencia",
+                                    new { matricula.Matricula, prestacoes.Conta, prestacoes.Chave, @Sequencia = VencimentoInicial.AddMonths(i).ToString("yyyyMM") }).ToList();
+
+                            if (prestacao.Count > 0)
+                            {
+                                var cts = new CancellationTokenSource();
+                                cts.Dispose();
+                            }
+                            else
+                            {
+                                db.Prestacoes.Add(prest);
+                                db.SaveChanges();
+                            }
                         }
                     }
                 }

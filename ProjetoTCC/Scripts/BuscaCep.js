@@ -42,14 +42,14 @@
                     else {
                         //CEP pesquisado não foi encontrado.
                         limpa_formulário_cep();
-                        alert("CEP não encontrado");
+                        toastr.error("CEP não encontrado");
                     }
                 });
             } //end if.
             else {
                 //cep é inválido.
                 limpa_formulário_cep();
-                alert("Formato de CEP inválido");
+                toastr.error("Formato de CEP inválido");
             }
         } //end if.
         else {

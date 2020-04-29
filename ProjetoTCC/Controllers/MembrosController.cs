@@ -72,8 +72,7 @@ namespace ProjetoTCC.Controllers
                         Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
                             ve.PropertyName, ve.ErrorMessage);
                     }
-                }
-                
+                }                
                 throw;
             }       
             return View(membros);
@@ -248,12 +247,7 @@ namespace ProjetoTCC.Controllers
                 {
                     CPF = CPF.Replace(".", string.Empty).Replace("-", string.Empty);
 
-                    var retorno = connection.ExecuteScalar<int>("SELECT dbo.FC_VALIDA_CNPJCPF("+CPF+")");
-
-                    if (retorno != 1)
-                    {
-                        TempData["error"] = "CPF inválido";
-                    }
+                    var retorno = connection.ExecuteScalar<int>("SELECT dbo.FC_VALIDA_CNPJCPF('"+CPF+"')");
 
                     return Json(retorno, JsonRequestBehavior.AllowGet);
                 }
