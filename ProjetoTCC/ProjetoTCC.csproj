@@ -160,6 +160,7 @@
     <Compile Include="Controllers\ContasController.cs" />
     <Compile Include="Controllers\FaccoesController.cs" />
     <Compile Include="Controllers\FormaPagamentoController.cs" />
+    <Compile Include="Controllers\GeraPrestacoesController.cs" />
     <Compile Include="Controllers\MembrosController.cs" />
     <Compile Include="Controllers\MotosController.cs" />
     <Compile Include="Controllers\PrestacoesController.cs" />
@@ -391,7 +392,7 @@
     <Content Include="Views\Prestacoes\Delete.cshtml" />
     <Content Include="Views\Prestacoes\Details.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
-    <Content Include="Views\Prestacoes\GeraPrestacoes.cshtml" />
+    <Content Include="Views\GeraPrestacoes\GeraPrestacoes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
