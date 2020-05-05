@@ -36,6 +36,7 @@ namespace ProjetoTCC
         public string Chave { get; set; }
         
         [Display(Name = "Sequência")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public string Sequencia { get; set; }
 
         public decimal? Valor { get; set; }

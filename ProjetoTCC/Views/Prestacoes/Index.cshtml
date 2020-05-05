@@ -58,29 +58,35 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Chave)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sequencia)
+                <td> <!-- Sequência no formato 9999/99 -->
+                    @String.Format("{0}/{1}", item.Sequencia.Substring(0, 4), @item.Sequencia.Substring(4, 2))
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DtVencimento)
+                <td> <!-- Data no formato 99/99/9999 -->
+                    @String.Format("{0:d}", item.DtVencimento)
                 </td>
 
-                @if (item.Situacao == "A")
+                @if (item.Situacao == "A" && item.DtVencimento > DateTime.Now)
                 {
                     <td>
                         <button type="button" class="btn btn-secondary btn-sm btn-block" disabled>Em aberto</button>
                     </td>
                 }
-                else if (item.Situacao == "V")
+                else if (item.Situacao == "A" && item.DtVencimento <= DateTime.Now)
                 {
                     <td>
-                        <button type="button" class="btn btn-danger btn-sm btn-block" disabled>Vencido</button>
+                        <button type="button" class="btn btn-danger btn-sm btn-block" disabled>Vencida</button>
+                    </td>
+                }
+                else if (item.Situacao == "P")
+                {
+                    <td>
+                        <button type="button" class="btn btn-success btn-sm btn-block" disabled>Paga</button>
                     </td>
                 }
                 else
                 {
                     <td>
-                        <button type="button" class="btn btn-success btn-sm btn-block" disabled>Pago</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-block" disabled>Anulada</button>
                     </td>
                 }
 
@@ -95,6 +101,9 @@
 </table>
 
 @section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#mytable').DataTable({

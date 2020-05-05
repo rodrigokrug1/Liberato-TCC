@@ -1,6 +1,8 @@
 ﻿@model ProjetoTCC.Prestacoes
 
 @{
+    /**/
+
     ViewBag.Title = "Gerar Prestações";
 }
 
@@ -12,101 +14,105 @@
         <li class="breadcrumb-item active" aria-current="page">Gerar prestações</li>
     </ol>
 </nav>
-
+<hr />
+<small class="form-text text-muted">
+    A rotina de Geração de Prestações permite gerar várias prestações para um ou vários membros de uma só vez.<br />
+    Informações sobre vencimento e valor das prestações são definidas no menu <i>Definições / Parâmetros / Chaves</i>.
+</small>
 <hr />
 
-<h4>Gerar prestações para:</h4>
-
-<br />
 
 @using (Html.BeginForm())
 {
-    <div>
-        <div class="row">
-            <div class="col">
-                <h6>Conta</h6>
+    <div class="row">
+        <div class="col">
+            <h4>Gerar prestações para:</h4>
+            <small class="form-text text-muted">
+                Defina o escopo da conta, chave e sequência devem ser informadas.
+            </small>
+            <br />
+            <div>
                 <div class="col">
-                    @Html.DropDownList("Conta", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
-                </div>
-            </div>
-            <div class="col">
-                <h6>Sequência</h6>
-                <div class="col-md-7">
-                    <div class="row">
-                        <div class="col px-lg-3">
-                            @Html.TextBox("PeriodoI", null, htmlAttributes: new { @class = "form-control", placeholder = "0000/00" })
-                        </div>
-                        até
-                        <div class="col px-lg-3">
-                            @Html.TextBox("PeriodoF", null, htmlAttributes: new { @class = "form-control", placeholder = "0000/00" })
-                        </div>
+                    Conta
+                    <div class="col">
+                        @Html.DropDownList("Conta", null, "Selecione", htmlAttributes: new { @class = "form-control col" })
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <br />
-    <div>
-        <div class="row">
-            <div class="col">
-                <h6>Chave</h6>
+            <br />
+            <div>
                 <div class="col">
-                    @Html.DropDownList("Chave", null, "Selecione", htmlAttributes: new { @class = "form-control col-8" })
+                    Chave
+                    <div class="col">
+                        @Html.DropDownList("Chave", null, "Selecione", htmlAttributes: new { @class = "form-control col" })
+                    </div>
                 </div>
             </div>
+            <br />
+            <div class="col">
+                Sequência
+                <div class="row col">
+                    <div class="col">
+                        @Html.TextBox("PeriodoI", null, htmlAttributes: new { @class = "form-control", placeholder = "Inicial ex: 0000/00" })
+                    </div>
+                    até
+                    <div class="col">
+                        @Html.TextBox("PeriodoF", null, htmlAttributes: new { @class = "form-control", placeholder = "Final ex: 0000/00" })
+                    </div>
+                </div>
+                <small class="form-text text-muted">
+                    A sequência define o intervalo de meses em que as prestações serão geradas. <br />
+                    Para gerar prestações para um único mês, informe igualmente as sequências inicial e final.
+                </small>
+            </div>
+        </div>
+        <br />
+        <div class="col">
+            <h4>Filtragem de membros:</h4>
+            <small class="form-text text-muted">
+                Defina o escopo dos membros para qual as prestações serão geradas.
+            </small>
+            <br />
+            <div>
+                <div class="col">
+                    @Html.RadioButton("TipoFiltro", "PorMembro")
+                    <label class="form-check-label">
+                        Gerar para o seguinte membro:
+                    </label>
+                    <div class="col">
+                        @Html.DropDownList("Matricula", null, "Selecione", htmlAttributes: new { @class = "form-control col" })
+                    </div>
+                </div>
+                <br />
+                <div class="col">
+                    @Html.RadioButton("TipoFiltro", "PorFaccao")
+                    <label class="form-check-label">
+                        Gerar para os membros da seguinte facção:
+                    </label>
+                    <div class="col">
+                        @Html.DropDownList("Faccao", null, "Selecione", htmlAttributes: new { @class = "form-control col" })
+                    </div>
+                </div>
+                <br />
+                <div class="col">
+                    @Html.RadioButton("TipoFiltro", "Todos")
+                    <label class="form-check-label">
+                        Gerar para todos os membros
+                    </label>
+                    <small class="form-text text-muted">
+                        Ao selecionar esta opção, as prestações serão geradas para todos os membros, de todas as facções.
+                    </small>
+                </div>
+
+            </div>
         </div>
     </div>
-
-    <br />
-
-    <h4>Filtragem de membros:</h4>
-
-    <br />
-
-    <div>
-        <div class="row">
-            <div class="col">
-                @Html.RadioButton("TipoFiltro", "Todos")
-                <label class="form-check-label">
-                    <h6>Para todos os membros</h6>
-                </label>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                @Html.RadioButton("TipoFiltro", "PorMembro")
-                <label class="form-check-label">
-                    <h6>Por membro</h6>
-                </label>
-                <div class="col">
-                    @Html.DropDownList("Matricula", null, "Selecione", htmlAttributes: new { @class = "form-control col-4" })
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                @Html.RadioButton("TipoFiltro", "PorFaccao")
-                <label class="form-check-label">
-                    <h6>Por facção</h6>
-                </label>
-                <div class="col">
-                    @Html.DropDownList("Faccao", null, "Selecione", htmlAttributes: new { @class = "form-control col-4" })
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-
     <hr />
-
     <div class="form-group">
         <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#confirmaGeracao">
             Gerar
         </button>
-        <button type="button" class="btn btn-secondary ">@Html.ActionLink("Cancelar", "Index")</button>
+        <button type="button" class="btn btn-secondary ">@Html.ActionLink("Cancelar", "Index", "Prestacoes")</button>
     </div>
 
     <div class="modal fade" id="confirmaGeracao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -128,8 +134,6 @@
             </div>
         </div>
     </div>
-
-
 }
 
 @section Scripts {

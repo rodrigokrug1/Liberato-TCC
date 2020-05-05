@@ -21,6 +21,8 @@ Tipo VARCHAR(11) NOT NULL,
 Descricao VARCHAR(30),
 Juro FLOAT,
 Multa FLOAT,
+DtVencimentoSugerida DATETIME, -- Adicionar
+ValorSugerido DECIMAL, -- Adicionar
 Inativo BIT
 CONSTRAINT conta_unica UNIQUE (Conta, Chave)
 FOREIGN KEY(TipoChave) REFERENCES TipoChave(Tipo)

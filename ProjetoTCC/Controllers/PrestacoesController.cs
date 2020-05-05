@@ -20,15 +20,7 @@ namespace ProjetoTCC.Controllers
         // GET: Prestacoes
         public ActionResult Index()
         {
-
             return View(db.Prestacoes.ToList());
-        }
-
-        private static void MascaraSequencia(Prestacoes prestacoes)
-        {
-            string esquerda = prestacoes.Sequencia.Substring(0, 4);
-            string direita = prestacoes.Sequencia.Substring(5, 6);
-            prestacoes.Sequencia = esquerda + "/" + direita;
         }
 
         // GET: Prestacoes/Details/5

@@ -30,6 +30,10 @@ namespace ProjetoTCC
 
         public bool GeraConta { get; set; }
 
+        //public DateTime? DtVencimentoSugerida { get; set; }
+
+        //public decimal? ValorSugerido { get; set; }
+
         public virtual TipoChave TipoChave { get; set; }
 
         public virtual Faccoes Faccoes { get; set; }

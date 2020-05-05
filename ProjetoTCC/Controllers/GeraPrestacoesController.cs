@@ -37,7 +37,7 @@ namespace ProjetoTCC.Controllers
 
             if (y > x)
             {
-                TempData["error"] = "Período final não pode ser inferior ao inicial.";
+                TempData["error"] = "Período final deve ser inferior ou igual ao inicial.";
                 Dropdown();
                 return View();
             }
@@ -88,7 +88,7 @@ namespace ProjetoTCC.Controllers
 
                     foreach (dynamic matricula in membros)
                     {
-                        for (int i = 1; i <= f; i++)
+                        for (int i = 0; i <= f; i++)
                         {
                             Prestacoes prest = new Prestacoes
                             {
@@ -97,7 +97,8 @@ namespace ProjetoTCC.Controllers
                                 Chave = Chave,
                                 Sequencia = VencimentoInicial.AddMonths(i).ToString("yyyyMM"),
                                 DtVencimento = VencimentoInicial.AddMonths(i),
-                                Situacao = "A"
+                                Situacao = "A",
+                                Ass = "Criada pela geração de prestações em " + DateTime.Now.ToString()
                             };
 
                             var prestacao = connection
@@ -160,18 +161,18 @@ namespace ProjetoTCC.Controllers
             // Primeiro vencimento da mensalidade é o dia 5 correspondendo ao período inicial
             VencimentoInicial = new DateTime(AnoIniInt, MesIniInt, 5);
 
-            if (PeriodoI == PeriodoF)
-            {
-                f = 1;
-            }
-            else
-            {
+            //if (PeriodoI == PeriodoF)
+            //{
+            //    f = 0;
+            //}
+            //else
+            //{
                 int a = (AnoFinInt - AnoIniInt) * 12;
                 int b = Math.Abs(MesFinInt - MesIniInt);
 
                 // Operador ternário: se o mês inicial for menor que o mês final, faz a soma, senão, faz subtração
                 f = (MesIniInt < MesFinInt ? a + b : a - b);
-            }
+            //}
         }
 
         // Monta a clausula Where da consulta
