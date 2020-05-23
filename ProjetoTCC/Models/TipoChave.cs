@@ -1,10 +1,8 @@
 namespace ProjetoTCC
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("TipoChave")]
     public partial class TipoChave
@@ -17,10 +15,13 @@ namespace ProjetoTCC
         }
 
         [Key]
-        [StringLength(11)]
+        [StringLength(11, ErrorMessage = "Tipo deve conter até 11 caracteres.")]
+        [Required(ErrorMessage = "Tipo é obrigatório.")]
         public string Tipo { get; set; }
 
-        [StringLength(30)]
+
+        [Display(Name = "Descrição")]
+        [StringLength(30, ErrorMessage = "Descrição deve ter até 30 caracteres.")]
         public string Descricao { get; set; }
 
         public bool Inativo { get; set; }

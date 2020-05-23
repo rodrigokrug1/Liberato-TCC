@@ -137,7 +137,9 @@ FOREIGN KEY(Conta) REFERENCES Contas(Conta)
 );
 
 CREATE TABLE Parametros(
-Clube VARCHAR(30),
+RazaoSocial VARCHAR(50),
+Clube VARCHAR(20),
+Sigla CHAR(4),
 CNPJ CHAR(14) PRIMARY KEY,
 CEP CHAR(8),
 Endereco VARCHAR(80),

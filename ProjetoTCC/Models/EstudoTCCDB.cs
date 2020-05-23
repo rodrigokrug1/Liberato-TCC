@@ -1,9 +1,6 @@
 namespace ProjetoTCC
 {
-    using System;
     using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public partial class EstudoTCCDB : DbContext
     {
@@ -168,11 +165,6 @@ namespace ProjetoTCC
 
             modelBuilder.Entity<Motos>()
                 .Property(e => e.Cilindrada)
-                .IsFixedLength()
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Motos>()
-                .Property(e => e.Ano)
                 .IsFixedLength()
                 .IsUnicode(false);
 

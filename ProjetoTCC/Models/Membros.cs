@@ -4,6 +4,7 @@ namespace ProjetoTCC
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Web.UI.WebControls;
 
     [Table("Membros")]
     public partial class Membros
@@ -15,7 +16,7 @@ namespace ProjetoTCC
             Prestacoes = new HashSet<Prestacoes>();
         }
 
-        public Membros( int matricula)
+        public Membros(int matricula)
         {
             Matricula = matricula;
         }
@@ -23,7 +24,8 @@ namespace ProjetoTCC
         [Key]
         public int Matricula { get; set; }
 
-        [StringLength(50)]
+        [Required(ErrorMessage = "Nome deve ser informado.")]
+        [StringLength(50, MinimumLength = 10, ErrorMessage = "Nome deve ter entre 10 e 50 caracteres.")]
         public string Nome { get; set; }
 
         [Display(Name = "Graduação")]
@@ -39,7 +41,16 @@ namespace ProjetoTCC
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Data de nascimento")]
+        [Required(ErrorMessage = "Data deve ser preenchida.")]
+        [RegularExpression(@"^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|          (29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$", ErrorMessage = "Data inválida.")]
         public DateTime? DtNascimento { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [Display(Name = "Data de expedição da CNH")]
+        [Required(ErrorMessage = "Data deve ser preenchida.")]
+        [RegularExpression(@"^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|          (29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$", ErrorMessage = "Data inválida.")]
+        public DateTime? DtExpedicaoCNH { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
@@ -47,12 +58,15 @@ namespace ProjetoTCC
         public DateTime? DtIngresso { get; set; }
 
         [StringLength(20)]
+        [Required(ErrorMessage = "Nacionalidade deve ser informada.")]
         public string Nacionalidade { get; set; }
 
-        [StringLength(20)]
+        [Required(ErrorMessage = "Apelido deve ser informado.")]
+        [StringLength(20, MinimumLength = 20, ErrorMessage = "Apelido deve ter entre 2 e 20 caracteres.")]
         public string Apelido { get; set; }
 
-        [StringLength(9)]
+        [Required(ErrorMessage = "CEP deve ser informado.")]
+        [StringLength(9, ErrorMessage = "CEP deve ter 9 números.")]
         public string CEP { get; set; }
 
         [Display(Name = "Endereço")]
@@ -61,6 +75,7 @@ namespace ProjetoTCC
 
         [Display(Name = "Número")]
         [StringLength(5)]
+        [Required(ErrorMessage = "Número deve ser informado.")]
         public string Numero { get; set; }
 
         [Display(Name = "Complemento")]
@@ -76,26 +91,27 @@ namespace ProjetoTCC
         [StringLength(2)]
         public string UF { get; set; }
 
+        [Display(Name = "País")]
         [StringLength(20)]
+        [Required(ErrorMessage = "País deve ser informado.")]
         public string Pais { get; set; }
 
         [StringLength(10)]
+        [Required(ErrorMessage = "RG deve ser informado.")]
         public string RG { get; set; }
 
         [StringLength(14)]
+        [Required(ErrorMessage = "CPF deve ser informado.")]
         public string CPF { get; set; }
 
         [StringLength(11)]
+        [Required(ErrorMessage = "CNH deve ser informada.")]
         public string CNH { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        [Display(Name = "Data de expedição da CNH")]
-        public DateTime? DtExpedicaoCNH { get; set; }
 
         [Display(Name = "E-mail")]
         [StringLength(50)]
-        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "E-mail inválido")]
+        [Required(ErrorMessage = "E-mail deve ser preenchido.")]
+        [RegularExpression(@"^[a-zA-Z]+(([\'\,\.\- ][a-zA-Z ])?[a-zA-Z]*)*\s+<(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})>$|^(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})$", ErrorMessage = "E-mail Inválido")]
         public string Email { get; set; }
 
         [StringLength(14)]
@@ -105,11 +121,13 @@ namespace ProjetoTCC
         public string Celular { get; set; }
 
         [Display(Name = "Nome do pai")]
-        [StringLength(50)]
+        [Required(ErrorMessage = "Nome deve ser informado.")]
+        [StringLength(50, MinimumLength = 10, ErrorMessage = "Nome deve ter entre 10 e 50 caracteres.")]
         public string NomePai { get; set; }
 
         [Display(Name = "Nome da mãe")]
-        [StringLength(50)]
+        [Required(ErrorMessage = "Nome deve ser informado.")]
+        [StringLength(50, MinimumLength = 10, ErrorMessage = "Nome deve ter entre 10 e 50 caracteres.")]
         public string NomeMae { get; set; }
 
         [Display(Name = "Tipo sanguíneo")]

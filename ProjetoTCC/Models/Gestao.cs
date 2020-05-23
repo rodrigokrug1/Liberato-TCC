@@ -1,10 +1,8 @@
 namespace ProjetoTCC
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Gestao")]
     public partial class Gestao
@@ -17,7 +15,9 @@ namespace ProjetoTCC
 
         public int Id { get; set; }
 
-        [StringLength(30)]
+        [Display(Name = "Descrição")]
+        [Required(ErrorMessage = "Nome deve ser informado.")]
+        [StringLength(30, MinimumLength = 5, ErrorMessage = "Descrição deve ter entre 5 e 30 caracteres.")]
         public string Descricao { get; set; }
 
         [StringLength(9)]

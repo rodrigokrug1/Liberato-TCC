@@ -1,10 +1,8 @@
 namespace ProjetoTCC
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("FormaPagamento")]
     public partial class FormaPagamento
@@ -16,9 +14,11 @@ namespace ProjetoTCC
         }
 
         [Key]
-        [StringLength(1)]
+        [StringLength(1, ErrorMessage = "Tipo deve conter 1 caractere.")]
+        [Required(ErrorMessage = "Tipo é obrigatório.")]
         public string Tipo { get; set; }
 
+        [Display(Name = "Descrição")]
         [StringLength(20)]
         public string Descricao { get; set; }
 

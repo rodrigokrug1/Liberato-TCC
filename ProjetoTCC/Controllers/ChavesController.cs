@@ -85,7 +85,7 @@ namespace ProjetoTCC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Tipo = new SelectList(db.TipoChave, "tipo", "tipo", Chave.Tipo); // na viewbag tem que ser "tipoChave".
+            ViewBag.Tipo = new SelectList(db.TipoChave, "tipo", "tipo", Chave.Tipo);
             return View(Chave);
         }
 

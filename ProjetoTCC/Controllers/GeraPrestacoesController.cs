@@ -70,13 +70,24 @@ namespace ProjetoTCC.Controllers
                 return View();
             }
 
-            CalculaPeriodo(PeriodoI, PeriodoF, out DateTime VencimentoInicial, out int f);
+            CalculaPeriodoEVencimento(PeriodoI, PeriodoF, out DateTime VencimentoInicial, out int f);
 
             string where = Where(TipoFiltro);
 
+            GravaPrestacoes(Matricula, Conta, Chave, Faccao, VencimentoInicial, f, where);
+
+            Dropdown();
+
+            TempData["success"] = "Rotina de executada com sucesso.";
+
+            return RedirectToAction("Index", "Prestacoes");
+        }
+
+        private void GravaPrestacoes(int? Matricula, string Conta, string Chave, string Faccao, DateTime VencimentoInicial, int f, string where)
+        {
             using
             (
-                var connection = new SqlConnection("data source=LOCALHOST\\SQLEXPRESS;initial catalog=EstudoTCC;user id=sa;password=gyq27r2fd7")
+            var connection = new SqlConnection(Functions.Conexao())
             )
             {
                 connection.Open();
@@ -101,19 +112,15 @@ namespace ProjetoTCC.Controllers
                                 Ass = "Criada pela geração de prestações em " + DateTime.Now.ToString()
                             };
 
-                            var prestacao = connection
-                                .Query<Prestacoes>("SELECT TOP 1 NrPrest FROM Prestacoes(NOLOCK) WHERE Matricula = @Matricula AND Conta = @Conta AND Chave = @Chave AND Sequencia = @Sequencia",
-                                    new { matricula.Matricula, Conta, Chave, @Sequencia = VencimentoInicial.AddMonths(i).ToString("yyyyMM") }).ToList();
-
-                            if (prestacao.Count > 0)
-                            {
-                                var cts = new CancellationTokenSource();
-                                cts.Dispose();
-                            }
-                            else
+                            if (Functions.ValidaPrestacao(matricula.Matricula, Conta, Chave, VencimentoInicial))
                             {
                                 db.Prestacoes.Add(prest);
                                 db.SaveChanges();
+                            }
+                            else
+                            {
+                                var cts = new CancellationTokenSource();
+                                cts.Dispose();
                             }
                         }
                     }
@@ -137,12 +144,9 @@ namespace ProjetoTCC.Controllers
                     connection.Close();
                 }
             }
-            Dropdown();
-            TempData["success"] = "Rotina de executada com sucesso.";
-            return RedirectToAction("Index", "Prestacoes");
         }
 
-        private static void CalculaPeriodo(string PeriodoI, string PeriodoF, out DateTime VencimentoInicial, out int f)
+        private static void CalculaPeriodoEVencimento(string PeriodoI, string PeriodoF, out DateTime VencimentoInicial, out int f)
         {
             // Separa o ano do mês do Periodo inicial
             string MesIni = PeriodoI.Substring(4, 2);
@@ -161,23 +165,16 @@ namespace ProjetoTCC.Controllers
             // Primeiro vencimento da mensalidade é o dia 5 correspondendo ao período inicial
             VencimentoInicial = new DateTime(AnoIniInt, MesIniInt, 5);
 
-            //if (PeriodoI == PeriodoF)
-            //{
-            //    f = 0;
-            //}
-            //else
-            //{
-                int a = (AnoFinInt - AnoIniInt) * 12;
-                int b = Math.Abs(MesFinInt - MesIniInt);
+            int a = (AnoFinInt - AnoIniInt) * 12;
+            int b = Math.Abs(MesFinInt - MesIniInt);
 
-                // Operador ternário: se o mês inicial for menor que o mês final, faz a soma, senão, faz subtração
-                f = (MesIniInt < MesFinInt ? a + b : a - b);
-            //}
+            // Se o mês inicial for menor que o mês final, faz a soma, senão, faz subtração
+            f = (MesIniInt < MesFinInt ? a + b : a - b);
         }
 
         // Monta a clausula Where da consulta
         private static string Where(string TipoFiltro)
-        {            
+        {
             string where = "";
 
             if (TipoFiltro == "PorFaccao")
@@ -205,7 +202,7 @@ namespace ProjetoTCC.Controllers
             {
                 Text = c.Conta + " - " + c.Descricao,
                 Value = c.Conta
-            });            
+            });
         }
     }
 }

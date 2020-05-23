@@ -1,10 +1,7 @@
 namespace ProjetoTCC
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Motos
     {
@@ -16,17 +13,17 @@ namespace ProjetoTCC
 
         public int Id { get; set; }
 
-        [StringLength(20)]
+        [Required(ErrorMessage = "Marca deve ser informada.")]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "Marca deve ter entre 2 e 20 caracteres.")]
         public string Marca { get; set; }
 
-        [StringLength(30)]
+        [Required(ErrorMessage = "Modelo deve ser informado.")]
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "Modelo deve ter entre 2 e 30 caracteres.")]
         public string Modelo { get; set; }
 
         [StringLength(4)]
+        [Required(ErrorMessage = "Cilindrada deve ser informada.")]
         public string Cilindrada { get; set; }
-
-        [StringLength(4)]
-        public string Ano { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Membros> Membros { get; set; }

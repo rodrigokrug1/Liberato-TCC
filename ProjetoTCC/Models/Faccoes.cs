@@ -1,10 +1,7 @@
 namespace ProjetoTCC
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Faccoes
     {
@@ -19,18 +16,23 @@ namespace ProjetoTCC
         [StringLength(11)]
         public string Chave { get; set; }
 
+        [Display(Name = "Descrição")]
         [StringLength(30)]
         public string Descricao { get; set; }
 
-        [StringLength(9)]
+        [Required(ErrorMessage = "CEP deve ser informado.")]
+        [StringLength(9, ErrorMessage = "CEP deve ter 9 números.")]
         public string CEP { get; set; }
 
+        [Display(Name = "Endereço")]
         [StringLength(80)]
         public string Endereco { get; set; }
 
+        [Display(Name = "Número")]
         [StringLength(5)]
         public string Numero { get; set; }
 
+        [Display(Name = "Complemento")]
         [StringLength(5)]
         public string Compl { get; set; }
 
@@ -43,6 +45,7 @@ namespace ProjetoTCC
         [StringLength(2)]
         public string UF { get; set; }
 
+        [Display(Name = "País")]
         [StringLength(20)]
         public string Pais { get; set; }
 

@@ -163,9 +163,11 @@
     <Compile Include="Controllers\GeraPrestacoesController.cs" />
     <Compile Include="Controllers\MembrosController.cs" />
     <Compile Include="Controllers\MotosController.cs" />
+    <Compile Include="Controllers\ParametrosController.cs" />
     <Compile Include="Controllers\PrestacoesController.cs" />
     <Compile Include="Controllers\TipoChaveController.cs" />
     <Compile Include="DecimalModelBinder.cs" />
+    <Compile Include="Utils\Functions.cs" />
     <Compile Include="Models\Arquivos.cs" />
     <Compile Include="Models\Cargos.cs" />
     <Compile Include="Models\Chaves.cs" />
@@ -209,6 +211,7 @@
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="img\ajax-loader.gif" />
     <Content Include="img\DataTables\sort_asc.png" />
     <Content Include="img\DataTables\sort_asc_disabled.png" />
     <Content Include="img\DataTables\sort_both.png" />
@@ -254,6 +257,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jquery.moneymask.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.custom.pt-br.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -396,6 +401,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Parametros\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

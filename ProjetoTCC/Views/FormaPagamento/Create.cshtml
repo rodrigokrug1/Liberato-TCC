@@ -24,6 +24,9 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Tipo, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
+            <small class="form-text text-muted">
+                Tipo é composto de um caractere maiúsculo que remeta à forma de pagamento. Exemplo, "D" para débito.
+            </small>
             @Html.EditorFor(model => model.Tipo, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Tipo, "", new { @class = "text-danger" })
         </div>

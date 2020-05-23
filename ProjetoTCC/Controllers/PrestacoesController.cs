@@ -10,6 +10,7 @@ using System.Net;
 using System.Web.Mvc;
 using Dapper;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace ProjetoTCC.Controllers
 {
@@ -51,20 +52,27 @@ namespace ProjetoTCC.Controllers
 
         // POST: Prestacoes/Create
         [HttpPost]
-        public ActionResult Create([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prestacoes, string sequencia)
+        public ActionResult Create([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prest, string sequencia)
         {
             try
             {
-                RemoveMascara(prestacoes, sequencia);
+                RemoveMascara(prest, sequencia);
 
                 if (ModelState.IsValid)
                 {
-                    db.Prestacoes.Add(prestacoes);
-                    db.SaveChanges();
-                    TempData["success"] = "Prestação criada com sucesso";
-                    return RedirectToAction("Index");
+                    if (Functions.ValidaPrestacao(prest.Matricula, prest.Conta, prest.Chave, prest.DtVencimento))
+                    {
+                        db.Prestacoes.Add(prest);
+                        db.SaveChanges();
+                        TempData["success"] = "Prestação criada com sucesso.";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["warning"] = "Prestação já cadastrada.";
+                    }
                 }
-                Dropdown(prestacoes);
+                Dropdown(prest);
             }
             catch (DbEntityValidationException e)
             {
@@ -80,7 +88,7 @@ namespace ProjetoTCC.Controllers
                 }
                 throw;
             }
-            return View(prestacoes);
+            return View(prest);
         }
 
         // GET: Prestacoes/Edit/5

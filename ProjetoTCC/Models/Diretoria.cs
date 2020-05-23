@@ -1,10 +1,7 @@
 namespace ProjetoTCC
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Diretoria")]
     public partial class Diretoria
@@ -14,8 +11,10 @@ namespace ProjetoTCC
 
         public int? Cargo { get; set; }
 
+        [Display(Name = "Gestão")]
         public int? Gestao { get; set; }
 
+        [Display(Name = "Facção")]
         [StringLength(11)]
         public string Faccao { get; set; }
 

@@ -1,13 +1,7 @@
 namespace ProjetoTCC
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity;
-    using System.Data.Entity.Spatial;
-    using System.Linq;
-    using System.Linq.Expressions;
 
     public partial class Prestacoes
     {
@@ -47,7 +41,7 @@ namespace ProjetoTCC
         [Display(Name = "Vencimento")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime? DtVencimento { get; set; }
+        public DateTime DtVencimento { get; set; }
 
         [Display(Name = "Pagamento")]
         [DataType(DataType.Date)]

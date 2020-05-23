@@ -144,10 +144,10 @@
     @Scripts.Render("~/bundles/validations_pt-br")
     @Scripts.Render("~/bundles/toastr")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/scripts/CustomValidation.js")
 
     <script src="~/Scripts/datatables.min.js"></script>
-
-
+    <script src="@Url.Content("~/Scripts/")" type="text/javascript"></script>
 
 </body>
 </html>

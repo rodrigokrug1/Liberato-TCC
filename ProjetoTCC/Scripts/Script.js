@@ -22,7 +22,8 @@ birthField.addEventListener('change', (event) => {
     ageField.value = getAge(date) + ' anos'
 })
 
-//### Validação de CPF ###
+
+// ### Validação de CPF ###
 $('#CPF').focusout(function () {
     var cpf = $(this).val();
     var data = {
@@ -34,9 +35,28 @@ $('#CPF').focusout(function () {
         data: data,
         error: function () { toastr.error("Não foi possível verificar o CPF") },
         success: function (data) {
-            if (data !== 1) {
+            if (data !== true) {
                 toastr.error("CPF inválido");
-            }                      
+            }
+        }
+    });
+});
+
+// ### Validação de CNPJ ###
+$('#CNPJ').focusout(function () {
+    var cpf = $(this).val();
+    var data = {
+        CNPJ: cnpj
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Parametros/ValidaCNPJ',
+        data: data,
+        error: function () { toastr.error("Não foi possível verificar o CNPJ") },
+        success: function (data) {
+            if (data !== true) {
+                toastr.error("CNPJ inválido");
+            }
         }
     });
 });
