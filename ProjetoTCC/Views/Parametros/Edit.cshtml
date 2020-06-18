@@ -1,0 +1,149 @@
+﻿@model ProjetoTCC.Parametros
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar parâmetro</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-dark">
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>,
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Parâmetros", "Details", "Parametros")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Editar</li>
+    </ol>
+</nav>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+
+    <div>
+        <div>
+            <h5>Clube</h5>
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(model => model.Clube, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Clube, new { htmlAttributes = new { @class = "form-control col" } })
+                        @Html.ValidationMessageFor(model => model.Clube, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.Sigla, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Sigla, new { htmlAttributes = new { @class = "form-control col" } })
+                        @Html.ValidationMessageFor(model => model.Sigla, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(model => model.RazaoSocial, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.RazaoSocial, new { htmlAttributes = new { @class = "form-control col" } })
+                        @Html.ValidationMessageFor(model => model.RazaoSocial, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.CNPJ, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.CNPJ, new { htmlAttributes = new { @class = "form-control col" } })
+                        @Html.ValidationMessageFor(model => model.CNPJ, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div method="get" action=".">
+            <h5>Endereço</h5>
+            <small id="passwordHelpBlock" class="form-text text-muted">
+                Digite o CEP (apenas números) e tecle TAB para preencher o endereço automaticamente.
+            </small>
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(model => model.CEP, "CEP", htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control col", placeholder = "99999-999" } })
+                        @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    @Html.LabelFor(model => model.Endereco, htmlAttributes: new { @class = "control-label col-6" })
+                    <div class="col ">
+                        @Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control col readonly", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Endereco, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.Numero, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Numero, new { htmlAttributes = new { @class = "form-control col" } })
+                        @Html.ValidationMessageFor(model => model.Numero, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.Compl, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Compl, new { htmlAttributes = new { @class = "form-control col" } })
+                        @Html.ValidationMessageFor(model => model.Compl, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    @Html.LabelFor(model => model.Bairro, htmlAttributes: new { @class = "control-label col-3" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control col  readonly", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-4">
+                    @Html.LabelFor(model => model.Cidade, htmlAttributes: new { @class = "control-label col-4" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control col  readonly", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.UF, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.UF, new { htmlAttributes = new { @class = "form-control col  readonly", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.UF, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.Pais, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.DropDownListFor(model => model.Pais, null, htmlAttributes: new { @class = "form-control col" })
+                        @Html.ValidationMessageFor(model => model.Pais, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-dark " />
+        <button type="button" class="btn btn-secondary ">@Html.ActionLink("Cancelar", "Details")</button>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#CEP').mask('99999-999');
+            $('#CNPJ').mask('99.999.999/9999-99');
+        });
+    </script>
+}

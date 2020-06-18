@@ -1,0 +1,133 @@
+﻿@model ProjetoTCC.Parametros
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+
+<h2>Parâmetros</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-dark">
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Parâmetros</li>
+    </ol>
+</nav>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+
+    <div>
+        <div>
+            <h5>Sistema registrado para:</h5>
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(model => model.Clube, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Clube, new { htmlAttributes = new { @class = "form-control col readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.Sigla, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Sigla, new { htmlAttributes = new { @class = "form-control col readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(model => model.RazaoSocial, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.RazaoSocial, new { htmlAttributes = new { @class = "form-control col readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.CNPJ, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.CNPJ, new { htmlAttributes = new { @class = "form-control col readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div>
+            <h5>Endereço</h5>
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(model => model.CEP, "CEP", htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control col readonly", @readonly = "readonly" } })
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    @Html.LabelFor(model => model.Endereco, htmlAttributes: new { @class = "control-label col-6" })
+                    <div class="col ">
+                        @Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control col readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.Numero, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Numero, new { htmlAttributes = new { @class = "form-control col readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.Compl, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Compl, new { htmlAttributes = new { @class = "form-control col readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    @Html.LabelFor(model => model.Bairro, htmlAttributes: new { @class = "control-label col-3" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control col  readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+                <div class="col-4">
+                    @Html.LabelFor(model => model.Cidade, htmlAttributes: new { @class = "control-label col-4" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control col  readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.UF, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.UF, new { htmlAttributes = new { @class = "form-control col  readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.Pais, htmlAttributes: new { @class = "control-label col" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Pais, new { htmlAttributes = new { @class = "form-control readonly", @readonly = "readonly" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <p>
+        <button type="button" class="btn btn-dark">@Html.ActionLink("Editar", "Edit", new { CNPJ = Model.CNPJ })</button>
+        <button type="button" class="btn btn-secondary ">@Html.ActionLink("Home", "Index", "Home") </button>
+    </p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#CEP').mask('99999-999');
+            $('#CNPJ').mask('99.999.999/9999-99');
+        });
+    </script>
+}

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ProjetoTCC.Parametros>
+
+@{
+    ViewBag.Title = "Parâmetros";
+}
+
+<h2>Parâmetros</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-dark">
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Parâmetros</li>
+    </ol>
+</nav>
+
+<p>
+    <button type="button" class="btn btn-dark ">@Html.ActionLink("Novo", "Create")</button>
+</p>
+
+<table class="table table-hover" id="mytable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RazaoSocial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clube)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sigla)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RazaoSocial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Clube)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sigla)
+                </td>
+                <td align="right">
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Editar", "Edit", new { CNPJ = item.CNPJ }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Detalhes", "Details", new { CNPJ = item.CNPJ }) </button>
+                    <button type="button" class="btn btn-dark btn-sm">@Html.ActionLink("Deletar", "Delete", new { CNPJ = item.CNPJ }) </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#mytable').DataTable({
+                "language": {
+                    "url": "/Content/pt-br.json"
+                }
+            });
+        });
+    </script>
+}

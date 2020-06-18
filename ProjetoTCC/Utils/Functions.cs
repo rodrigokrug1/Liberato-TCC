@@ -78,5 +78,22 @@ namespace ProjetoTCC
             }
         }
         #endregion
+
+        /// <summary>
+        /// Busca o CNPJ na tabela de parâmetros.
+        /// </summary>
+        /// <returns></returns>
+        public static string BuscaParametro()
+        {
+            using
+            (
+            var connection = new SqlConnection(Conexao())
+            )
+            {
+                var CNPJ = connection.ExecuteScalar<string>("SELECT TOP 1 CNPJ FROM Parametros(NOLOCK)");
+
+                return CNPJ.ToString();
+            }
+        }
     }
 }

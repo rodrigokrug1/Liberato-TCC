@@ -1,4 +1,4 @@
-﻿//### Calcula a data de nascimento e devolve no campo ###
+﻿//### Calcula a idade e devolve no campo ###
 function getAge(DtNascimento) {
     const current = new Date()
     let diff = current.getFullYear() - DtNascimento.getFullYear()
@@ -16,12 +16,26 @@ const birthField = document.querySelector('#DtNascimento')
 const ageField = document.querySelector('#idade')
 
 // Calcular a idade sempre que o campo da data de nascimento for alterado:
-birthField.addEventListener('change', (event) => {
+//birthField.addEventListener('change', (event) => {
+//birthField.addEventListener('change', (event) => {
+//    const date = new Date(event.target.value)
+
+//    ageField.value = getAge(date) + ' anos'
+//})
+
+$('#DtNascimento').change(function () {
     const date = new Date(event.target.value)
 
     ageField.value = getAge(date) + ' anos'
 })
 
+$('#idade').ready(function () {
+    const date = new Date(event.target.value)
+
+    ageField.value = getAge(date) + ' anos'
+
+
+})
 
 // ### Validação de CPF ###
 $('#CPF').focusout(function () {
@@ -33,7 +47,7 @@ $('#CPF').focusout(function () {
         type: 'POST',
         url: '/Membros/ValidaCPF',
         data: data,
-        error: function () { toastr.error("Não foi possível verificar o CPF") },
+        error: function () { toastr.error("Não foi possível verificar o CPF")},
         success: function (data) {
             if (data !== true) {
                 toastr.error("CPF inválido");
@@ -44,7 +58,7 @@ $('#CPF').focusout(function () {
 
 // ### Validação de CNPJ ###
 $('#CNPJ').focusout(function () {
-    var cpf = $(this).val();
+    var cnpj = $(this).val();
     var data = {
         CNPJ: cnpj
     }
@@ -52,7 +66,7 @@ $('#CNPJ').focusout(function () {
         type: 'POST',
         url: '/Parametros/ValidaCNPJ',
         data: data,
-        error: function () { toastr.error("Não foi possível verificar o CNPJ") },
+        error: function () { toastr.error("Não foi possível verificar o CNPJ")},
         success: function (data) {
             if (data !== true) {
                 toastr.error("CNPJ inválido");

@@ -42,14 +42,12 @@ namespace ProjetoTCC
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Data de nascimento")]
         [Required(ErrorMessage = "Data deve ser preenchida.")]
-        [RegularExpression(@"^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|          (29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$", ErrorMessage = "Data inválida.")]
         public DateTime? DtNascimento { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Data de expedição da CNH")]
-        [Required(ErrorMessage = "Data deve ser preenchida.")]
-        [RegularExpression(@"^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|          (29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$", ErrorMessage = "Data inválida.")]
+        [Required(ErrorMessage = "Data deve ser preenchida.")]        
         public DateTime? DtExpedicaoCNH { get; set; }
 
         [DataType(DataType.Date)]
@@ -62,7 +60,7 @@ namespace ProjetoTCC
         public string Nacionalidade { get; set; }
 
         [Required(ErrorMessage = "Apelido deve ser informado.")]
-        [StringLength(20, MinimumLength = 20, ErrorMessage = "Apelido deve ter entre 2 e 20 caracteres.")]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "Apelido deve ter entre 2 e 20 caracteres.")]
         public string Apelido { get; set; }
 
         [Required(ErrorMessage = "CEP deve ser informado.")]

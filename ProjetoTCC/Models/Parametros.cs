@@ -4,7 +4,6 @@ namespace ProjetoTCC
 
     public partial class Parametros
     {
-
         [Display(Name = "Razão social")]
         [StringLength(50)]
         public string RazaoSocial { get; set; }
@@ -16,11 +15,11 @@ namespace ProjetoTCC
         public string Sigla { get; set; }
 
         [Key]
-        [StringLength(14)]
+        [StringLength(18, ErrorMessage = "CNPJ deve ter 14 números.")]
         public string CNPJ { get; set; }
 
         [Required(ErrorMessage = "CEP deve ser informado.")]
-        [StringLength(8, ErrorMessage = "CEP deve ter 8 números.")]
+        [StringLength(9, ErrorMessage = "CEP deve ter 8 números.")]
         public string CEP { get; set; }
 
         [Display(Name = "Endereço")]
