@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ProjetoTCC
 {
@@ -94,6 +96,25 @@ namespace ProjetoTCC
 
                 return CNPJ.ToString();
             }
+        }
+
+        /// <summary>
+        /// Criptografa uma string com hash SHA256 para salvar no banco de dados.
+        /// </summary>
+        /// <param name="texto"></param>
+        /// <returns></returns>
+        public static string Criptografia(string texto)
+        {
+            SHA256 sha256 = SHA256Managed.Create();
+            byte[] bytes = Encoding.UTF8.GetBytes(texto);
+            byte[] hash = sha256.ComputeHash(bytes);
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < hash.Length; i++)
+            {
+                result.Append(hash[i].ToString("X"));
+            }
+            return result.ToString();
         }
     }
 }

@@ -14,12 +14,14 @@ namespace ProjetoTCC.Controllers
         private EstudoTCCDB db = new EstudoTCCDB();
 
         // GET: Chaves
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Chaves.ToList());            
         }
 
         // GET: Chaves/Details/5
+        [Authorize]
         public ActionResult Details(string chaves)
         {
             if (chaves == null)
@@ -35,6 +37,7 @@ namespace ProjetoTCC.Controllers
         }
 
         // GET: Chaves/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.Tipo = new SelectList(db.TipoChave.Where(c => c.Inativo == false), "tipo", "tipo");
@@ -74,6 +77,7 @@ namespace ProjetoTCC.Controllers
         }
 
         // GET: Chaves/Edit/5
+        [Authorize]
         public ActionResult Edit(string chaves)
         {
             if (chaves == null)
@@ -105,6 +109,7 @@ namespace ProjetoTCC.Controllers
         }
 
         // GET: Chaves/Delete/5
+        [Authorize]
         public ActionResult Delete(string chaves)
         {
             if (chaves == null)

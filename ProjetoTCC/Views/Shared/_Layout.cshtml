@@ -61,69 +61,74 @@
     <input type="hidden" id="warning" value="@TempData["warning"]" />
     <input type="hidden" id="error" value="@TempData["error"]" />
 
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a class="navbar-brand">
-            <img src="~/img/logo.png" width="50" height="55" />
-            @Html.ActionLink("Mutantes MC", "Index", "Home", new { area = "" }, new { @class = "navbar-brand openPage" })
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <!--Início dropdown com submenu-->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Definições</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li>@Html.ActionLink("Clube", "Details", "Parametros", new { area = "" }, new { @class = "dropdown-item openPage  " })</li>
-                        <li>@Html.ActionLink("Usuários", "Index", "Autenticacao", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                        <li class="dropdown-submenu">
-                            <a class="dropdown-item openPage dropdown-toggle">Parâmetros</a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Tipos de chave", "Index", "TipoChave", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                                <li>@Html.ActionLink("Chaves", "Index", "Chaves", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                                <li>@Html.ActionLink("Contas", "Index", "Contas", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                                <li>@Html.ActionLink("Formas de pagamento", "Index", "FormaPagamento", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                                <li>@Html.ActionLink("Cargos de diretoria", "Index", "Cargos", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                                <li>@Html.ActionLink("Facções", "Index", "Faccoes", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                                <li>@Html.ActionLink("Motos", "Index", "Motos", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <!--Fim dropdown com submenu-->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li>@Html.ActionLink("Membros", "Index", "Membros", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                        <li>@Html.ActionLink("Prestações", "Index", "Prestacoes", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                        <li>@Html.ActionLink("Diretoria", "Index", "Diretoria", new { area = "" }, new { @class = "dropdown-item openPage disabled" })</li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relatórios</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item openPage disabled">Membros</a></li>
-                        <li><a class="dropdown-item openPage disabled">Financeiro</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">Ajuda</a>
-                </li>
-            </ul>
-        </div>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-            <ul class="navbar-nav nav justify-content-end">
-                <li class="nav-item dropdown justify-content-end">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name<span class="caret"></span></a>
-                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <li>@Html.ActionLink("Alterar senha", "AlterarSenha", "Perfil", new { @class = "dropdown-item openPage " })</li>
-                        <li>@Html.ActionLink("Sair", "Logout", "Autenticacao", new { @class = "dropdown-item openPage " })</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <a class="navbar-brand">
+                <img src="~/img/logo.png" width="50" height="55" />
+                @Html.ActionLink("Mutantes MC", "Index", "Home", new { area = "" }, new { @class = "navbar-brand openPage" })
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <!--Início dropdown com submenu-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Definições</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>@Html.ActionLink("Clube", "Details", "Parametros", new { area = "" }, new { @class = "dropdown-item openPage  " })</li>
+                            <li>@Html.ActionLink("Usuários", "Index", "Autenticacao", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item openPage dropdown-toggle">Parâmetros</a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Tipos de chave", "Index", "TipoChave", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                                    <li>@Html.ActionLink("Chaves", "Index", "Chaves", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                                    <li>@Html.ActionLink("Contas", "Index", "Contas", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                                    <li>@Html.ActionLink("Formas de pagamento", "Index", "FormaPagamento", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                                    <li>@Html.ActionLink("Cargos de diretoria", "Index", "Cargos", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                                    <li>@Html.ActionLink("Facções", "Index", "Faccoes", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                                    <li>@Html.ActionLink("Motos", "Index", "Motos", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--Fim dropdown com submenu-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>@Html.ActionLink("Membros", "Index", "Membros", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                            <li>@Html.ActionLink("Prestações", "Index", "Prestacoes", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                            <li>@Html.ActionLink("Diretoria", "Index", "Diretoria", new { area = "" }, new { @class = "dropdown-item openPage disabled" })</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relatórios</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item openPage disabled">Membros</a></li>
+                            <li><a class="dropdown-item openPage disabled">Financeiro</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Ajuda</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav nav justify-content-end">
+                    <li class="nav-item dropdown justify-content-end">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@User.Identity.Name<span class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <li>@Html.ActionLink("Alterar senha", "AlteraSenha", "Perfil", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                            <li>@Html.ActionLink("Sair", "Logout", "Autenticacao", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    }
     <div class="container">
         <br />
 
