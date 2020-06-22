@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class FormaPagamentoController : Controller
     {
         private EstudoTCCDB db = new EstudoTCCDB();
@@ -48,6 +49,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.FormaPagamento.Add(formaPagamento);
                     db.SaveChanges();
+                    TempData["success"] = "Forma de pagamento criada com sucesso";
                     return RedirectToAction("Index");
                 }
                 return View(formaPagamento);
@@ -83,6 +85,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Entry(formaPagamento).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
+                    TempData["success"] = "Forma de pagamento editada com sucesso";
                     return RedirectToAction("Index");
                 }
                 return View();
@@ -117,6 +120,7 @@ namespace ProjetoTCC.Controllers
                 FormaPagamento formaPagamento = db.FormaPagamento.Find(tipo);
                 db.FormaPagamento.Remove(formaPagamento);
                 db.SaveChanges();
+                TempData["success"] = "Forma de pagamento excluída com sucesso";
                 return RedirectToAction("Index");
             }
             catch

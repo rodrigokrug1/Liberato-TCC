@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class TipoChaveController : Controller
     {
         private EstudoTCCDB db = new EstudoTCCDB();
@@ -46,6 +47,7 @@ namespace ProjetoTCC.Controllers
             {
                 db.TipoChave.Add(tipoChave);
                 db.SaveChanges();
+                TempData["success"] = "Registro criado com sucesso";
                 return RedirectToAction("Index");
             }
             return View(tipoChave);
@@ -74,6 +76,7 @@ namespace ProjetoTCC.Controllers
             {
                 db.Entry(tipoChave).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
+                TempData["success"] = "Registro editado com sucesso";
                 return RedirectToAction("Index");
             }
             return View();
@@ -101,6 +104,7 @@ namespace ProjetoTCC.Controllers
             TipoChave tipoChave = db.TipoChave.Find(tipo);
             db.TipoChave.Remove(tipoChave);
             db.SaveChanges();
+            TempData["success"] = "Registro excluído com sucesso";
             return RedirectToAction("Index");
         }
     }

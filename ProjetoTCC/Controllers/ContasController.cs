@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class ContasController : Controller
     {
         private EstudoTCCDB db = new EstudoTCCDB();
@@ -51,6 +52,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Contas.Add(contas);
                     db.SaveChanges();
+                    TempData["success"] = "Conta criada com sucesso";
                     return RedirectToAction("Index");
                 }
                 ViewBag.Tipo = new SelectList(db.TipoChave, "tipo", "tipo", contas.Tipo);
@@ -96,6 +98,7 @@ namespace ProjetoTCC.Controllers
             {
                 db.Entry(Conta1).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["success"] = "Conta editada com sucesso";
                 return RedirectToAction("Index");
             }
             ViewBag.Tipo = new SelectList(db.TipoChave, "tipo", "tipo", Conta1.Tipo);
@@ -124,6 +127,7 @@ namespace ProjetoTCC.Controllers
             Contas Conta = db.Contas.Find(contas);
             db.Contas.Remove(Conta);
             db.SaveChanges();
+            TempData["success"] = "Conta excluída com sucesso";
             return RedirectToAction("Index");
         }
     }

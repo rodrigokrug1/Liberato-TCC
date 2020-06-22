@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class GeraPrestacoesController : Controller
     {
         private EstudoTCCDB db = new EstudoTCCDB();
@@ -24,7 +25,7 @@ namespace ProjetoTCC.Controllers
             //Validações   
             if (string.IsNullOrEmpty(PeriodoI) || string.IsNullOrEmpty(PeriodoF))
             {
-                TempData["error"] = "Informe os períodos inicial e final.";
+                TempData["warning"] = "Informe os períodos inicial e final";
                 Dropdown();
                 return View();
             }
@@ -37,35 +38,35 @@ namespace ProjetoTCC.Controllers
 
             if (y > x)
             {
-                TempData["error"] = "Período final deve ser inferior ou igual ao inicial.";
+                TempData["error"] = "Período final deve ser inferior ou igual ao inicial";
                 Dropdown();
                 return View();
             }
 
             if (string.IsNullOrEmpty(Conta))
             {
-                TempData["error"] = "Selecione a conta para geração.";
+                TempData["warning"] = "Selecione a conta para geração";
                 Dropdown();
                 return View();
             }
 
             if (string.IsNullOrEmpty(TipoFiltro))
             {
-                TempData["error"] = "Selecione um filtro.";
+                TempData["warning"] = "Selecione um filtro";
                 Dropdown();
                 return View();
             }
 
             if (TipoFiltro == "PorMembro" && Matricula == null)
             {
-                TempData["error"] = "Selecione o membro de acordo com o filtro selecionado.";
+                TempData["warning"] = "Selecione o membro de acordo com o filtro selecionado";
                 Dropdown();
                 return View();
             }
 
             if (TipoFiltro == "PorFaccao" && string.IsNullOrEmpty(Faccao))
             {
-                TempData["error"] = "Selecione a facção de acordo com o filtro selecionado.";
+                TempData["warning"] = "Selecione a facção de acordo com o filtro selecionado";
                 Dropdown();
                 return View();
             }
@@ -78,7 +79,7 @@ namespace ProjetoTCC.Controllers
 
             Dropdown();
 
-            TempData["success"] = "Rotina de executada com sucesso.";
+            TempData["success"] = "Rotina de executada com sucesso";
 
             return RedirectToAction("Index", "Prestacoes");
         }
@@ -109,7 +110,7 @@ namespace ProjetoTCC.Controllers
                                 Sequencia = VencimentoInicial.AddMonths(i).ToString("yyyyMM"),
                                 DtVencimento = VencimentoInicial.AddMonths(i),
                                 Situacao = "A",
-                                Ass = "Criada pela geração de prestações em " + DateTime.Now.ToString()
+                                Ass = "Criada pela geração de prestações em: " + DateTime.Now.ToString() + " por: " + User.Identity.Name
                             };
 
                             if (Functions.ValidaPrestacao(matricula.Matricula, Conta, Chave, VencimentoInicial))

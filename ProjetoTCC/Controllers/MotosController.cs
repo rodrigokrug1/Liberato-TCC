@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class MotosController : Controller
     {
         private EstudoTCCDB db = new EstudoTCCDB();
@@ -48,6 +49,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Motos.Add(motos);
                     db.SaveChanges();
+                    TempData["success"] = "Moto criada com sucesso";
                     return RedirectToAction("Index");
                 }
                 return View(motos);
@@ -83,6 +85,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Entry(motos).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
+                    TempData["success"] = "Moto editada com sucesso";
                     return RedirectToAction("Index");
                 }
                 return View();
@@ -117,6 +120,7 @@ namespace ProjetoTCC.Controllers
                 Motos motos = db.Motos.Find(Id);
                 db.Motos.Remove(motos);
                 db.SaveChanges();
+                TempData["success"] = "Moto excluída com sucesso";
                 return RedirectToAction("Index"); 
             }
             catch

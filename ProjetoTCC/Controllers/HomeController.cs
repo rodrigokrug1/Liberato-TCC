@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly EstudoTCCDB db = new EstudoTCCDB();

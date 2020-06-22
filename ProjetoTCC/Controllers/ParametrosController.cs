@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class ParametrosController : Controller
     {
         private EstudoTCCDB db = new EstudoTCCDB();
@@ -54,6 +55,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Parametros.Add(param);
                     db.SaveChanges();
+                    TempData["success"] = "Parâmetro registrado com sucesso";
                     return RedirectToAction("Index");
                 }
                 Dropdown(param);
@@ -104,6 +106,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Entry(param).State = EntityState.Modified;
                     db.SaveChanges();
+                    TempData["success"] = "Parâmetro editado com sucesso";
                     return RedirectToAction("Details");
                 }
                 Dropdown(param);

@@ -19,12 +19,14 @@ namespace ProjetoTCC.Controllers
             return View(db.Usuario.ToList());
         }
 
-        // GET: Autenticacao
+
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Create(CadastroUsuarioViewModel viewModel)
         {
@@ -35,7 +37,7 @@ namespace ProjetoTCC.Controllers
 
             if (db.Usuario.Count(u => u.Login == viewModel.Login) > 0)
             {
-                ModelState.AddModelError("Login", "Usuário já existente");
+                ModelState.AddModelError("Login", "Usuário já cadastrado");
                 return View(viewModel);
             }
 
@@ -55,6 +57,7 @@ namespace ProjetoTCC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public ActionResult Edit(int? Id)
         {
             if (Id == null)
@@ -69,6 +72,7 @@ namespace ProjetoTCC.Controllers
             return View(usuario);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Edit([Bind(Include = "Id, Nome, Login, Senha, Inativo")] Usuario usuario)
         {
@@ -76,12 +80,13 @@ namespace ProjetoTCC.Controllers
             {
                 db.Entry(usuario).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["success"] = "Registro editada com sucesso";
+                TempData["success"] = "Usuário editado com sucesso";
                 return RedirectToAction("Index");
             }
             return View();
         }
 
+        [Authorize]
         public ActionResult Delete(int? Id)
         {
             if (Id == null)
@@ -195,6 +200,7 @@ namespace ProjetoTCC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public ActionResult Logout()
         {
             Request.GetOwinContext().Authentication.SignOut("ApplicationCookie");

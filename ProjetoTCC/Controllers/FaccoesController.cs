@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class FaccoesController : Controller
     {
         private EstudoTCCDB db = new EstudoTCCDB();
@@ -52,6 +53,7 @@ namespace ProjetoTCC.Controllers
                 {
                     db.Faccoes.Add(faccoes);
                     db.SaveChanges();
+                    TempData["success"] = "Facção criada com sucesso";
                     return RedirectToAction("Index");
                 }
                 Dropdown(faccoes);
@@ -88,6 +90,8 @@ namespace ProjetoTCC.Controllers
             {
                 db.Entry(faccoes).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["success"] = "Facção editada com sucesso";
+
                 return RedirectToAction("Index");
             }
             return View();
@@ -117,6 +121,7 @@ namespace ProjetoTCC.Controllers
                 Faccoes faccoes = db.Faccoes.Find(chave);
                 db.Faccoes.Remove(faccoes);
                 db.SaveChanges();
+                TempData["success"] = "Facção excluída com sucesso";
                 return RedirectToAction("Index");
             }
             catch

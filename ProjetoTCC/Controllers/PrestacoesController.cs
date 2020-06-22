@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProjetoTCC.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using Dapper;
-using System.Threading;
-using Newtonsoft.Json;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class PrestacoesController : Controller
     {
         private EstudoTCCDB db = new EstudoTCCDB();
@@ -64,12 +60,12 @@ namespace ProjetoTCC.Controllers
                     {
                         db.Prestacoes.Add(prest);
                         db.SaveChanges();
-                        TempData["success"] = "Prestação criada com sucesso.";
+                        TempData["success"] = "Prestação criada com sucesso";
                         return RedirectToAction("Index");
                     }
                     else
                     {
-                        TempData["warning"] = "Prestação já cadastrada.";
+                        TempData["warning"] = "Prestação já existente";
                     }
                 }
                 Dropdown(prest);

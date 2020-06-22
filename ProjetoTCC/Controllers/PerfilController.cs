@@ -5,6 +5,7 @@ using ProjetoTCC.ViewModels;
 
 namespace ProjetoTCC.Controllers
 {
+    [Authorize]
     public class PerfilController : Controller
     {
         private EstudoTCCDB db = new EstudoTCCDB();
@@ -38,8 +39,7 @@ namespace ProjetoTCC.Controllers
             db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
-            TempData["success"] = "Senha alterada com sucesso.";
-
+            TempData["success"] = "Senha alterada com sucesso";
             return RedirectToAction("Index", "Home");
         }
     }

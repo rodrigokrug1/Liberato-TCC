@@ -4,6 +4,11 @@ namespace ProjetoTCC
 
     public partial class Parametros
     {
+        public Parametros()
+        {
+
+        }
+
         [Display(Name = "Razão social")]
         [StringLength(50)]
         public string RazaoSocial { get; set; }
