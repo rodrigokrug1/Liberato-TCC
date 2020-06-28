@@ -42,7 +42,7 @@
                     else {
                         //CEP pesquisado não foi encontrado.
                         limpa_formulário_cep();
-                        toastr.error("CEP não encontrado");
+                        toastr.warning("CEP não encontrado");
                     }
                 });
             } //end if.

@@ -38,7 +38,7 @@ namespace ProjetoTCC.Controllers
         // GET: Prestacoes/Create
         public ActionResult Create()
         {
-            Prestacoes prest = new Prestacoes();
+            Prestacoes prest = new Prestacoes();            
             prest.Sequencia = DateTime.Now.ToString("yyyyMM");
             prest.DtVencimento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 5);
             Dropdown();
@@ -58,6 +58,7 @@ namespace ProjetoTCC.Controllers
                 {
                     if (Functions.ValidaPrestacao(prest.Matricula, prest.Conta, prest.Chave, prest.DtVencimento))
                     {
+                        prest.Ass = "Registro criado em " + DateTime.Now.ToString() + " por: " + User.Identity.Name;
                         db.Prestacoes.Add(prest);
                         db.SaveChanges();
                         TempData["success"] = "Prestação criada com sucesso";
@@ -106,20 +107,21 @@ namespace ProjetoTCC.Controllers
 
         // POST: Prestacoes/Edit/5
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prestacoes, string sequencia)
+        public ActionResult Edit([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prest, string sequencia)
         {
             try
             {
-                RemoveMascara(prestacoes, sequencia);
+                RemoveMascara(prest, sequencia);
+                prest.Ass = "Registro editado em " + DateTime.Now.ToString() + " por: " + User.Identity.Name;
 
                 if (ModelState.IsValid)
                 {
-                    db.Entry(prestacoes).State = EntityState.Modified;
+                    db.Entry(prest).State = EntityState.Modified;
                     db.SaveChanges();
                     TempData["success"] = "Prestação editada com sucesso";
                     return RedirectToAction("Index");
                 }
-                Dropdown(prestacoes);
+                Dropdown(prest);
                 return View();
             }
             catch (DbEntityValidationException e)

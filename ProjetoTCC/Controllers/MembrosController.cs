@@ -51,6 +51,8 @@ namespace ProjetoTCC.Controllers
             {
                 RemoveMascara(membros, cep, cpf, telefone, celular);
 
+                membros.Ass = "Registro criado em " + DateTime.Now.ToString() + " por: " + User.Identity.Name;
+
                 if (ModelState.IsValid)
                 {
                     db.Membros.Add(membros);
@@ -101,6 +103,9 @@ namespace ProjetoTCC.Controllers
             try
             {
                 RemoveMascara(membros, cep, cpf, telefone, celular);
+
+                membros.Ass = "Registro editado em " + DateTime.Now.ToString() + " por: " + User.Identity.Name;
+
                 if (ModelState.IsValid)
                 {
                     db.Entry(membros).State = EntityState.Modified;

@@ -123,16 +123,8 @@
         <div class="col">
             @Html.LabelFor(model => model.Obs, htmlAttributes: new { @class = "control-label col" })
             <div class="col">
-                @Html.EditorFor(model => model.Obs, new { htmlAttributes = new { @class = "form-control col-8 readonly", @readonly = "readonly" } })
+                @Html.EditorFor(model => model.Obs, new { htmlAttributes = new { @class = "form-control col-md-9 readonly", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Obs, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col ">
-            <div class="col align-content-lg-end">
-                <br />
-                <button type="button" class="btn btn-info -p" data-toggle="modal" data-target="#ExemploModalCentralizado">
-                    ...
-                </button>
             </div>
         </div>
     </div>
@@ -143,9 +135,10 @@
 <p>
     <button type="button" class="btn btn-dark">@Html.ActionLink("Editar", "Edit", new { Nrprest = Model.Nrprest })</button>
     <button type="button" class="btn btn-secondary ">@Html.ActionLink("Voltar", "Index") </button>
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ExemploModalCentralizado" >...</button>
 </p>
 
-<!-- Modal -->
+<!-- Modal assinatura -->
 <div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

@@ -1,41 +1,39 @@
 ﻿//### Calcula a idade e devolve no campo ###
 function getAge(DtNascimento) {
-    const current = new Date()
-    let diff = current.getFullYear() - DtNascimento.getFullYear()
+    const current = new Date();
+    let diff = current.getFullYear() - DtNascimento.getFullYear();
 
     if (
         new Date(current.getFullYear(), current.getMonth(), current.getDate()) <
         new Date(current.getFullYear(), DtNascimento.getMonth(), DtNascimento.getDate())
     )
-        diff--
+        diff--;
 
-    return diff
+    return diff;
 }
 // "Pegar" os elementos dos campos:
-const birthField = document.querySelector('#DtNascimento')
-const ageField = document.querySelector('#idade')
+const birthField = document.querySelector('#DtNascimento');
+const ageField = document.querySelector('#idade');
 
 // Calcular a idade sempre que o campo da data de nascimento for alterado:
-//birthField.addEventListener('change', (event) => {
-//birthField.addEventListener('change', (event) => {
-//    const date = new Date(event.target.value)
-
-//    ageField.value = getAge(date) + ' anos'
-//})
-
 $('#DtNascimento').change(function () {
-    const date = new Date(event.target.value)
 
-    ageField.value = getAge(date) + ' anos'
-})
+    const date = new Date(event.target.value);
+
+    ageField.value = getAge(date) + ' anos';
+});
 
 $('#idade').ready(function () {
-    const date = new Date(event.target.value)
 
-    ageField.value = getAge(date) + ' anos'
+    var data = $(this).val();
+    Console.log(data);
+
+    const date = new Date(event.target.value);
+
+    ageField.value = getAge(date) + ' anos';
+});
 
 
-})
 
 // ### Validação de CPF ###
 $('#CPF').focusout(function () {

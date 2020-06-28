@@ -12,8 +12,8 @@ namespace ProjetoTCC
         }
 
         [Key]
-        [Required(ErrorMessage = "Conta deve ser informado.")]
-        [StringLength(1, MinimumLength = 3, ErrorMessage = "Conta deve conter até 3 números.")]
+        [Required(ErrorMessage = "Conta deve ser informada.")]
+        [StringLength(3, MinimumLength = 1, ErrorMessage = "Conta deve conter até 3 números.")]
         public string Conta { get; set; }
 
         [Required]
