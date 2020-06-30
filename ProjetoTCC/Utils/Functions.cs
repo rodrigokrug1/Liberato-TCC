@@ -81,6 +81,7 @@ namespace ProjetoTCC
         }
         #endregion
 
+        #region Busca Parametros
         /// <summary>
         /// Busca o CNPJ na tabela de parâmetros.
         /// </summary>
@@ -97,7 +98,9 @@ namespace ProjetoTCC
                 return CNPJ.ToString();
             }
         }
+        #endregion
 
+        #region Criptografia
         /// <summary>
         /// Criptografa uma string com hash SHA256 para salvar no banco de dados.
         /// </summary>
@@ -116,5 +119,6 @@ namespace ProjetoTCC
             }
             return result.ToString();
         }
+        #endregion
     }
 }

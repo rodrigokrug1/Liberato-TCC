@@ -9,45 +9,46 @@ namespace ProjetoTCC
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                      "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                      "~/Scripts/jquery.validate*"));
 
             // Use a versão em desenvolvimento do Modernizr para desenvolver e aprender. Em seguida, quando estiver
             // pronto para a produção, utilize a ferramenta de build em https://modernizr.com para escolher somente os testes que precisa.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                      "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/popper.min.js",
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/BuscaCep.js",
-                      "~/Scripts/Script.js",
-                      "~/Scripts/jquery.mask.min.js",
-                      "~/Scripts/chart.min.js",
-                      "~/Scripts/custom.js"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(                      
+                      "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/Site.css",
                       "~/Content/dashboard.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js").Include(
+                      "~/Scripts/popper.min.js",
+                      "~/Scripts/BuscaCep.js",
+                      "~/Scripts/Script.js",
+                      "~/Scripts/jquery.mask.min.js",
+                      "~/Scripts/chart.min.js",
+                      "~/Scripts/custom.js",
+                      "~/Scripts/datatables.min.js"));
+
             // Validações no padrão brasileiro
             bundles.Add(new ScriptBundle("~/bundles/validations_pt-br").Include(
                       "~/Scripts/jquery.validate.custom.pt-br*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/custom").Include(
-                      "~/Scripts/custom.js"));
-
             bundles.Add(new StyleBundle("~/content/toastr",
-                    "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
-                    .Include("~/Content/toastr.css"));
+                      "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
+                      .Include("~/Content/toastr.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/toastr",
-                    "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
-                    .Include("~/Scripts/toastr.js"));
+                      "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
+                      .Include("~/Scripts/toastr.js"));
 
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

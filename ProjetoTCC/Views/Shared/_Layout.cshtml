@@ -11,9 +11,6 @@
     <title>@ViewBag.Title - VS Sagittarius</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/toastr")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/custom")
-
 
     <link href="~/Content/datatables.css" rel="stylesheet" />
 
@@ -86,7 +83,7 @@
                                     <li>@Html.ActionLink("Chaves", "Index", "Chaves", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
                                     <li>@Html.ActionLink("Contas", "Index", "Contas", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
                                     <li>@Html.ActionLink("Formas de pagamento", "Index", "FormaPagamento", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
-                                    <li>@Html.ActionLink("Cargos de diretoria", "Index", "Cargos", new { area = "" }, new { @class = "dropdown-item openPage " })</li>                                    
+                                    <li>@Html.ActionLink("Cargos de diretoria", "Index", "Cargos", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
                                     <li>@Html.ActionLink("Motos", "Index", "Motos", new { area = "" }, new { @class = "dropdown-item openPage " })</li>
                                 </ul>
                             </li>
@@ -168,10 +165,10 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/validations_pt-br")
     @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/js")
     @RenderSection("scripts", required: false)
-    @Scripts.Render("~/scripts/CustomValidation.js")
 
-    <script src="~/Scripts/datatables.min.js"></script>
     <script src="@Url.Content("~/Scripts/")" type="text/javascript"></script>
 
 </body>

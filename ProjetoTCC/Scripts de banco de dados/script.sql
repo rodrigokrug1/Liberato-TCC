@@ -1,177 +1,335 @@
-CREATE TABLE TipoChave(
-Tipo VARCHAR(11) NOT NULL PRIMARY KEY,
-Descricao VARCHAR(30),
-Inativo BIT
-CONSTRAINT tipoChave_unica UNIQUE (Tipo)
-);
+ï»¿--TipoChave
+CREATE TABLE [dbo].[TipoChave](
+	[Tipo] [varchar](11) NOT NULL,
+	[Descricao] [varchar](30) NULL,
+	[Inativo] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Tipo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [tipoChave_unica] UNIQUE NONCLUSTERED 
+(
+	[Tipo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
-CREATE TABLE Chaves(
-Chave VARCHAR(11) NOT NULL PRIMARY KEY,
-Tipo VARCHAR(11) NOT NULL,
-Descricao VARCHAR(30),
-GeraConta BIT,
-Inativo BIT
-CONSTRAINT chave_unica UNIQUE (chave, Tipo)
-FOREIGN KEY(Tipo) REFERENCES tipoChave(Tipo)
-);
+--Chaves
+CREATE TABLE [dbo].[Chaves](
+	[Chave] [varchar](11) NOT NULL,
+	[Tipo] [varchar](11) NOT NULL,
+	[Descricao] [varchar](30) NULL,
+	[Inativo] [bit] NULL,
+	[GeraConta] [bit] NULL,
+	[ValorSugerido] [decimal](18, 0) NULL,
+	[DtVencimentoSugerida] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Chave] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [chave_unica] UNIQUE NONCLUSTERED 
+(
+	[Chave] ASC,
+	[Tipo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
-CREATE TABLE Contas(
-Conta CHAR(3) NOT NULL PRIMARY KEY,
-Tipo VARCHAR(11) NOT NULL,
-Descricao VARCHAR(30),
-Juro FLOAT,
-Multa FLOAT,
-DtVencimentoSugerida DATETIME, -- Adicionar
-ValorSugerido DECIMAL, -- Adicionar
-Inativo BIT
-CONSTRAINT conta_unica UNIQUE (Conta, Chave)
-FOREIGN KEY(TipoChave) REFERENCES TipoChave(Tipo)
-);
+ALTER TABLE [dbo].[Chaves]  WITH CHECK ADD FOREIGN KEY([Tipo])
+REFERENCES [dbo].[TipoChave] ([Tipo])
+GO
 
-CREATE TABLE Motos(
-Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-Marca VARCHAR(20),
-Modelo VARCHAR(30),
-Cilindrada CHAR(4),
-Ano CHAR(4)
-);
+--Contas
+CREATE TABLE [dbo].[Contas](
+	[Conta] [char](3) NOT NULL,
+	[Tipo] [varchar](11) NOT NULL,
+	[Descricao] [varchar](30) NULL,
+	[Juro] [float] NULL,
+	[Multa] [float] NULL,
+	[Inativo] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Conta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [conta_unica] UNIQUE NONCLUSTERED 
+(
+	[Conta] ASC,
+	[Tipo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
-CREATE TABLE Faccoes(
-Chave VARCHAR(11) NOT NULL PRIMARY KEY,
-Descricao VARCHAR(30),
-CEP CHAR(8),
-Endereco VARCHAR(80),
-Numero VARCHAR(5),
-Compl VARCHAR(5),
-Bairro VARCHAR(40),
-Cidade VARCHAR(40),
-UF VARCHAR(2),
-Pais VARCHAR(20),
-Inativo BIT
-FOREIGN KEY(Faccao) REFERENCES Chaves(Chave)
-);
+ALTER TABLE [dbo].[Contas]  WITH CHECK ADD FOREIGN KEY([Tipo])
+REFERENCES [dbo].[TipoChave] ([Tipo])
+GO
 
-CREATE TABLE Membros(
-Matricula INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-Nome VARCHAR(50),
-Graduacao VARCHAR(11),
-Faccao VARCHAR(11),
-DtNascimento DATETIME,
-DtIngresso DATETIME,
-Nacionalidade VARCHAR(20),
-Apelido VARCHAR(20),
-CEP CHAR(8),
-Endereco VARCHAR(80),
-Numero VARCHAR(5),
-Compl VARCHAR(5),
-Bairro VARCHAR(40),
-Cidade VARCHAR(40),
-UF VARCHAR(2),
-Pais VARCHAR(20),
-RG char(10) UNIQUE,
-CPF char(11) UNIQUE,
-CNH char(11) UNIQUE,
-DtExpedicaoCNH DATETIME,
-Email VARCHAR(50),
-Telefone CHAR(10),
-Celular CHAR(11),
-NomePai VARCHAR(50),
-NomeMae VARCHAR(50),
-TipoSanguineo VARCHAR(3),
-FatorRH VARCHAR(3),
-Motocicleta INT,
-Ano CHAR(4),
-Inativo BIT,
-Ass VARCHAR(100)
-FOREIGN KEY (Motocicleta) REFERENCES Motos(Id),
-FOREIGN KEY (Graduacao) REFERENCES Chaves(Chave),
-FOREIGN KEY (Faccao) REFERENCES Faccoes(Chave)
-);
+--Motos
+CREATE TABLE [dbo].[Motos](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Marca] [varchar](20) NULL,
+	[Modelo] [varchar](30) NULL,
+	[Cilindrada] [char](4) NULL,
+	[Ano] [char](4) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
-/*
-	Para criar a tabela arquivos é necessário configurar o FILESTREAM
-	Como configurar: https://www.youtube.com/watch?v=o0KNTkXSj7c
-*/
-create table Arquivos(
-Id UNIQUEIDENTIFIER ROWGUIDCOL NOT NULL PRIMARY KEY,
-Matricula INT NOT NULL,
-Documento VARBINARY(MAX) FILESTREAM NULL,
-Foto VARBINARY(MAX) FILESTREAM NULL,
-Ass VARCHAR(100)
-FOREIGN KEY(Matricula) REFERENCES Membros(Matricula)
-);
+--Faccoes
+CREATE TABLE [dbo].[Faccoes](
+	[Chave] [varchar](11) NOT NULL,
+	[Descricao] [varchar](30) NULL,
+	[CEP] [char](8) NULL,
+	[Endereco] [varchar](80) NULL,
+	[Numero] [varchar](5) NULL,
+	[Compl] [varchar](5) NULL,
+	[Bairro] [varchar](40) NULL,
+	[Cidade] [varchar](40) NULL,
+	[UF] [varchar](2) NULL,
+	[Pais] [varchar](20) NULL,
+	[Inativo] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Chave] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
-CREATE TABLE Usuario(
-Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-Nome VARCHAR(100),
-Login VARCHAR(50),
-Senha VARCHAR(100),
-Inativo BIT
-);
+ALTER TABLE [dbo].[Faccoes]  WITH CHECK ADD FOREIGN KEY([Chave])
+REFERENCES [dbo].[Chaves] ([Chave])
+GO
 
-CREATE TABLE FormaPagamento(
-Tipo CHAR(1) NOT NULL PRIMARY KEY,
-Descricao VARCHAR(20),
-Inativo BIT
-);
+ALTER TABLE [dbo].[Faccoes]  WITH CHECK ADD FOREIGN KEY([Chave])
+REFERENCES [dbo].[Chaves] ([Chave])
+GO
 
-CREATE TABLE Prestacoes(
-Nrprest INT IDENTITY(1,1) PRIMARY KEY,
-Matricula INT,
-Conta CHAR(3),
-Chave VARCHAR(11),
-Sequencia CHAR(7),
-Valor DECIMAL,
-ValorCalculado DECIMAL,
-DtVencimento DATETIME,
-DtPagamento DATETIME,
-Situacao CHAR(1),
-FormaPagamento CHAR(1),
-Obs VARCHAR(100),
-Ass VARCHAR(100)
-CONSTRAINT prest_unica UNIQUE (Matricula, conta, chave, sequencia)
-FOREIGN KEY(Matricula) REFERENCES Membros(Matricula),
-FOREIGN KEY(FormaPagamento) REFERENCES FormaPagamento(Tipo),
-FOREIGN KEY(Chave) REFERENCES Chaves(Chave),
-FOREIGN KEY(Conta) REFERENCES Contas(Conta)
-);
+--Membros
+CREATE TABLE [dbo].[Membros](
+	[Matricula] [int] IDENTITY(1,1) NOT NULL,
+	[Nome] [varchar](50) NULL,
+	[Graduacao] [varchar](11) NULL,
+	[Faccao] [varchar](11) NULL,
+	[DtNascimento] [datetime] NULL,
+	[DtIngresso] [datetime] NULL,
+	[Nacionalidade] [varchar](20) NULL,
+	[Apelido] [varchar](20) NULL,
+	[CEP] [char](8) NULL,
+	[Endereco] [varchar](80) NULL,
+	[Numero] [varchar](5) NULL,
+	[Compl] [varchar](5) NULL,
+	[Bairro] [varchar](40) NULL,
+	[Cidade] [varchar](40) NULL,
+	[UF] [varchar](2) NULL,
+	[Pais] [varchar](20) NULL,
+	[RG] [char](10) NULL,
+	[CPF] [char](11) NULL,
+	[CNH] [char](11) NULL,
+	[DtExpedicaoCNH] [datetime] NULL,
+	[Email] [varchar](50) NULL,
+	[Telefone] [char](10) NULL,
+	[Celular] [char](11) NULL,
+	[NomePai] [varchar](50) NULL,
+	[NomeMae] [varchar](50) NULL,
+	[TipoSanguineo] [varchar](3) NULL,
+	[FatorRH] [varchar](3) NULL,
+	[Motocicleta] [int] NULL,
+	[Ano] [char](4) NULL,
+	[Inativo] [bit] NULL,
+	[Ass] [varchar](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Matricula] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[RG] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[CPF] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[CNH] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
-CREATE TABLE Parametros(
-RazaoSocial VARCHAR(50),
-Clube VARCHAR(20),
-Sigla CHAR(4),
-CNPJ CHAR(14) PRIMARY KEY,
-CEP CHAR(8),
-Endereco VARCHAR(80),
-Numero VARCHAR(5),
-Compl VARCHAR(5),
-Bairro VARCHAR(40),
-Cidade VARCHAR(40),
-UF VARCHAR(2),
-Pais VARCHAR(20)
-);
+ALTER TABLE [dbo].[Membros]  WITH CHECK ADD FOREIGN KEY([Motocicleta])
+REFERENCES [dbo].[Motos] ([Id])
+GO
 
--- Se der tempo eu faço!
-CREATE TABLE Gestao(
-Id int IDENTITY(1,1) PRIMARY KEY,
-Descricao VARCHAR(30),
-Periodo VARCHAR(9),
-GestaoAtual BIT
-);
+ALTER TABLE [dbo].[Membros]  WITH CHECK ADD FOREIGN KEY([Faccao])
+REFERENCES [dbo].[Faccoes] ([Chave])
+GO
 
-CREATE TABLE Cargos(
-Id INT IDENTITY(1,1) PRIMARY KEY,
-Descricao VARCHAR(30),
-Inativo BIT
-);
+ALTER TABLE [dbo].[Membros]  WITH CHECK ADD FOREIGN KEY([Graduacao])
+REFERENCES [dbo].[Chaves] ([Chave])
+GO
 
-CREATE TABLE Diretoria(
-Matricula INT PRIMARY KEY,
-Cargo INT,
-Gestao INT,
-Faccao VARCHAR(11)
-FOREIGN KEY (Matricula) REFERENCES Membros(Matricula),
-FOREIGN KEY (Faccao) REFERENCES Faccoes(Chave),
-FOREIGN KEY (Gestao) REFERENCES Gestao(Id),
-FOREIGN KEY (Cargo) REFERENCES Cargos(Id)
-);
+--Arquivos
+--CREATE TABLE [dbo].[Arquivos](
+--	[Id] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
+--	[Matricula] [int] NOT NULL,
+--	[Documento] [varbinary](max) FILESTREAM  NULL,
+--	[Foto] [varbinary](max) FILESTREAM  NULL,
+--	[Ass] [varchar](100) NULL,
+--PRIMARY KEY CLUSTERED 
+--(
+--	[Id] ASC
+--)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY] FILESTREAM_ON [FILESTREAM]
+--) ON [PRIMARY] FILESTREAM_ON [FILESTREAM]
+--GO
+
+--ALTER TABLE [dbo].[Arquivos]  WITH CHECK ADD FOREIGN KEY([Matricula])
+--REFERENCES [dbo].[Membros] ([Matricula])
+--GO
+
+--Usuarios
+CREATE TABLE [dbo].[Usuario](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Nome] [varchar](100) NULL,
+	[Login] [varchar](50) NULL,
+	[Senha] [varchar](100) NULL,
+	[Inativo] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+--FormaPagamento
+CREATE TABLE [dbo].[FormaPagamento](
+	[Tipo] [char](1) NOT NULL,
+	[Descricao] [varchar](20) NULL,
+	[Inativo] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Tipo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+--Prestacoes
+CREATE TABLE [dbo].[Prestacoes](
+	[Nrprest] [int] IDENTITY(1,1) NOT NULL,
+	[Matricula] [int] NULL,
+	[Conta] [char](3) NULL,
+	[Chave] [varchar](11) NULL,
+	[Sequencia] [char](6) NULL,
+	[Valor] [decimal](18, 0) NULL,
+	[ValorCalculado] [decimal](18, 0) NULL,
+	[DtVencimento] [datetime] NULL,
+	[DtPagamento] [datetime] NULL,
+	[Situacao] [char](1) NULL,
+	[FormaPagamento] [char](1) NULL,
+	[Obs] [varchar](100) NULL,
+	[Ass] [varchar](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Nrprest] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [prest_unica] UNIQUE NONCLUSTERED 
+(
+	[Matricula] ASC,
+	[Conta] ASC,
+	[Chave] ASC,
+	[Sequencia] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Prestacoes]  WITH CHECK ADD FOREIGN KEY([Chave])
+REFERENCES [dbo].[Chaves] ([Chave])
+GO
+
+ALTER TABLE [dbo].[Prestacoes]  WITH CHECK ADD FOREIGN KEY([Conta])
+REFERENCES [dbo].[Contas] ([Conta])
+GO
+
+ALTER TABLE [dbo].[Prestacoes]  WITH CHECK ADD FOREIGN KEY([FormaPagamento])
+REFERENCES [dbo].[FormaPagamento] ([Tipo])
+GO
+
+ALTER TABLE [dbo].[Prestacoes]  WITH CHECK ADD FOREIGN KEY([Matricula])
+REFERENCES [dbo].[Membros] ([Matricula])
+GO
+
+--Parametros
+CREATE TABLE [dbo].[Parametros](
+	[RazaoSocial] [varchar](50) NULL,
+	[Clube] [varchar](20) NULL,
+	[Sigla] [char](4) NULL,
+	[CNPJ] [char](14) NOT NULL,
+	[CEP] [char](8) NULL,
+	[Endereco] [varchar](80) NULL,
+	[Numero] [varchar](5) NULL,
+	[Compl] [varchar](5) NULL,
+	[Bairro] [varchar](40) NULL,
+	[Cidade] [varchar](40) NULL,
+	[UF] [varchar](2) NULL,
+	[Pais] [varchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CNPJ] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+--Gestao
+CREATE TABLE [dbo].[Gestao](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Descricao] [varchar](30) NULL,
+	[Periodo] [varchar](9) NULL,
+	[GestaoAtual] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+--Cargos
+CREATE TABLE [dbo].[Cargos](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Descricao] [varchar](30) NULL,
+	[Inativo] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+--Diretoria
+CREATE TABLE [dbo].[Diretoria](
+	[Matricula] [int] NOT NULL,
+	[Cargo] [int] NULL,
+	[Gestao] [int] NULL,
+	[Faccao] [varchar](11) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Matricula] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Diretoria]  WITH CHECK ADD FOREIGN KEY([Cargo])
+REFERENCES [dbo].[Cargos] ([Id])
+GO
+
+ALTER TABLE [dbo].[Diretoria]  WITH CHECK ADD FOREIGN KEY([Matricula])
+REFERENCES [dbo].[Membros] ([Matricula])
+GO
+
+ALTER TABLE [dbo].[Diretoria]  WITH CHECK ADD FOREIGN KEY([Faccao])
+REFERENCES [dbo].[Faccoes] ([Chave])
+GO
+
+ALTER TABLE [dbo].[Diretoria]  WITH CHECK ADD FOREIGN KEY([Gestao])
+REFERENCES [dbo].[Gestao] ([Id])
+GO
