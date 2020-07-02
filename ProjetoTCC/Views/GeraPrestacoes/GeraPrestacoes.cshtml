@@ -49,6 +49,13 @@
                 </div>
             </div>
             <br />
+            <div>
+                <div class="col">
+                    @Html.CheckBox("PorGraduacao")
+                    <label class="form-check-label">Gerar prestações de acordo com a graduação de cada membro</label>
+                </div>
+            </div>
+            <br />
             <div class="col">
                 Sequência
                 <div class="row col">
@@ -163,4 +170,16 @@
             });
         });
     </script>
+
+    <script>
+        $("#PorGraduacao").click(function () {
+            if ($("#PorGraduacao").is(":checked")) {
+                $("#Chave").attr("disabled", true);
+            } else {
+                $("#Chave").attr("disabled", false);
+            }              
+        })
+    </script>
+
+
 }

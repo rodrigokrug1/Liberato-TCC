@@ -6,6 +6,7 @@ namespace ProjetoTCC
     public partial class Faccoes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+
         public Faccoes()
         {
             Diretoria = new HashSet<Diretoria>();
@@ -21,7 +22,7 @@ namespace ProjetoTCC
         public string Descricao { get; set; }
 
         [Required(ErrorMessage = "CEP deve ser informado.")]
-        [StringLength(9, ErrorMessage = "CEP deve ter 9 números.")]
+        [StringLength(9, ErrorMessage = "CEP deve ter 8 números.")]
         public string CEP { get; set; }
 
         [Display(Name = "Endereço")]

@@ -20,7 +20,7 @@ namespace ProjetoTCC.Controllers
         }
 
         [HttpPost]
-        public ActionResult GeraPrestacoes(int? Matricula, string Conta, string Chave, string Sequencia, string PeriodoI, string PeriodoF, string TipoFiltro, string Faccao)
+        public ActionResult GeraPrestacoes(int? Matricula, string Conta, string Chave, string PeriodoI, string PeriodoF, string TipoFiltro, string Faccao, bool PorGraduacao)
         {
             //Validações   
             if (string.IsNullOrEmpty(PeriodoI) || string.IsNullOrEmpty(PeriodoF))
@@ -75,7 +75,7 @@ namespace ProjetoTCC.Controllers
 
             string where = Where(TipoFiltro);
 
-            GravaPrestacoes(Matricula, Conta, Chave, Faccao, VencimentoInicial, f, where);
+            GravaPrestacoes(Matricula, Conta, Chave, Faccao, VencimentoInicial, f, where, PorGraduacao);
 
             Dropdown();
 
@@ -84,7 +84,18 @@ namespace ProjetoTCC.Controllers
             return RedirectToAction("Index", "Prestacoes");
         }
 
-        private void GravaPrestacoes(int? Matricula, string Conta, string Chave, string Faccao, DateTime VencimentoInicial, int f, string where)
+
+        /// <summary>
+        /// Grava as prestações no banco de dados de acordo com o escopo do método CalculaPeriodoEVencimento.
+        /// </summary>
+        /// <param name="Matricula"></param>
+        /// <param name="Conta"></param>
+        /// <param name="Chave"></param>
+        /// <param name="Faccao"></param>
+        /// <param name="VencimentoInicial"></param>
+        /// <param name="f"></param>
+        /// <param name="where"></param>
+        private void GravaPrestacoes(int? Matricula, string Conta, string Chave, string Faccao, DateTime VencimentoInicial, int f, string where, bool PorGraduacao)
         {
             using
             (
@@ -95,25 +106,29 @@ namespace ProjetoTCC.Controllers
                 try
                 {
                     var membros = connection
-                        .Query<Membros>("SELECT Matricula FROM Membros(NOLOCK) WHERE " + where + ";",
+                        .Query<Membros>("SELECT Matricula, Graduacao FROM Membros(NOLOCK) WHERE " + where + ";",
                             new { Fac = Faccao, Mat = Matricula });
 
                     foreach (dynamic matricula in membros)
                     {
+                        string ChavePrest = PorGraduacao? matricula.Graduacao : Chave;
+
                         for (int i = 0; i <= f; i++)
                         {
                             Prestacoes prest = new Prestacoes
                             {
                                 Matricula = matricula.Matricula,
                                 Conta = Conta,
-                                Chave = Chave,
+                                Chave = ChavePrest,
                                 Sequencia = VencimentoInicial.AddMonths(i).ToString("yyyyMM"),
                                 DtVencimento = VencimentoInicial.AddMonths(i),
                                 Situacao = "A",
                                 Ass = "Criada pela geração de prestações em: " + DateTime.Now.ToString() + " por: " + User.Identity.Name
                             };
 
-                            if (Functions.ValidaPrestacao(matricula.Matricula, Conta, Chave, VencimentoInicial))
+                            bool valido = Functions.ValidaPrestacao(matricula.Matricula, Conta, Chave, prest.DtVencimento);
+
+                            if (valido)
                             {
                                 db.Prestacoes.Add(prest);
                                 db.SaveChanges();
@@ -147,6 +162,13 @@ namespace ProjetoTCC.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna o vencimento da primeira prestação e a quantidade de repetições a serem geradas (f), a partir dos períodos inicial e final.
+        /// </summary>
+        /// <param name="PeriodoI"></param>
+        /// <param name="PeriodoF"></param>
+        /// <param name="VencimentoInicial"></param>
+        /// <param name="f"></param>
         private static void CalculaPeriodoEVencimento(string PeriodoI, string PeriodoF, out DateTime VencimentoInicial, out int f)
         {
             // Separa o ano do mês do Periodo inicial

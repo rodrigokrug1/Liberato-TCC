@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -42,8 +44,11 @@ namespace ProjetoTCC.Controllers
 
         // POST: Faccoes/Create
         [HttpPost]
-        public ActionResult Create([Bind(Include = "chave, descricao, cep, endereco, numero, compl, bairro, cidade, uf, pais, inativo")] Faccoes faccoes)
+        public ActionResult Create([Bind(Include = "chave, descricao, cep, endereco, numero, compl, bairro, cidade, uf, pais, inativo")] Faccoes faccoes, string cep)
         {
+
+            faccoes.CEP = cep.Replace("-", string.Empty);
+
             try
             {
                 if (ModelState.IsValid)
@@ -55,10 +60,11 @@ namespace ProjetoTCC.Controllers
                 }
                 Dropdown(faccoes);
             }
-            catch (SqlException)
+            catch (SqlException e)
             {
-
+                Console.WriteLine(e.Errors);
             }
+
             return View(faccoes);
         }
 

@@ -25,7 +25,8 @@ namespace ProjetoTCC
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/Site.css",
-                      "~/Content/dashboard.css"));
+                      "~/Content/dashboard.css",
+                      "~/Content/datatables.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                       "~/Scripts/popper.min.js",

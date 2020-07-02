@@ -14,6 +14,10 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 GO
 
+INSERT INTO TIPOCHAVE (Tipo, Descricao, Inativo) VALUES('Facção', 'Facções do clube', 0)
+INSERT INTO TIPOCHAVE (Tipo, Descricao, Inativo) VALUES('Graduação', 'Graduação dos membros', 0)
+INSERT INTO TIPOCHAVE (Tipo, Descricao, Inativo) VALUES('Mensalidade', 'Mensalidade dos membros', 0)
+
 --Chaves
 CREATE TABLE [dbo].[Chaves](
 	[Chave] [varchar](11) NOT NULL,

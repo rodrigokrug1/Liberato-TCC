@@ -66,7 +66,7 @@ namespace ProjetoTCC.Controllers
                     }
                     else
                     {
-                        TempData["warning"] = "Prestação já existente";
+                        TempData["warning"] = "Prestação já cadastrada";
                     }
                 }
                 Dropdown(prest);
@@ -101,27 +101,26 @@ namespace ProjetoTCC.Controllers
                 return HttpNotFound();
             }
             Dropdown();
-
             return View(prestacoes);
         }
 
         // POST: Prestacoes/Edit/5
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prest, string sequencia)
+        public ActionResult Edit([Bind(Include = "nrprest,matricula,conta,chave,sequencia,valor,valorcalculado,dtvencimento,dtpagamento,situacao,formapagamento,obs,ass")] Prestacoes prestacoes, string sequencia)
         {
             try
             {
-                RemoveMascara(prest, sequencia);
-                prest.Ass = "Registro editado em " + DateTime.Now.ToString() + " por: " + User.Identity.Name;
+                RemoveMascara(prestacoes, sequencia);
+                prestacoes.Ass = "Registro editado em " + DateTime.Now.ToString() + " por: " + User.Identity.Name;                
 
                 if (ModelState.IsValid)
                 {
-                    db.Entry(prest).State = EntityState.Modified;
+                    db.Entry(prestacoes).State = EntityState.Modified;
                     db.SaveChanges();
                     TempData["success"] = "Prestação editada com sucesso";
                     return RedirectToAction("Index");
                 }
-                Dropdown(prest);
+                Dropdown(prestacoes);
                 return View();
             }
             catch (DbEntityValidationException e)
@@ -162,9 +161,17 @@ namespace ProjetoTCC.Controllers
             try
             {
                 Prestacoes prestacoes = db.Prestacoes.Find(nrPrest);
-                db.Prestacoes.Remove(prestacoes);
-                db.SaveChanges();
-                TempData["success"] = "Prestação excluída com sucesso";
+                if (prestacoes.Situacao == "P")
+                {
+                    TempData["info"] = "Não é possível excluir uma prestação paga";
+                }
+                else
+                {
+                    db.Prestacoes.Remove(prestacoes);
+                    db.SaveChanges();
+                    TempData["success"] = "Prestação excluída com sucesso";
+                }
+
                 return RedirectToAction("Index");
             }
             catch
@@ -207,6 +214,7 @@ namespace ProjetoTCC.Controllers
                 new SelectListItem {Text = "Em aberto", Value = "A"},
                 new SelectListItem {Text = "Vencido", Value = "V"},
                 new SelectListItem {Text = "Pago", Value = "P"},
+                new SelectListItem {Text = "Anulada", Value = "N"}
             };
         }
 

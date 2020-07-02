@@ -1,24 +1,22 @@
 ﻿@model ProjetoTCC.Prestacoes
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Deletar prestação";
 }
 
-<h2>Delete</h2>
+<h2>Deletar prestação </h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-dark">
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Home", "Index", "Home")</a></li>,
+        <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Prestações", "Index", "Prestacoes")</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Deletar</li>
+    </ol>
+</nav>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem certeza que deseja deletar este registro?</h3>
 <div>
-    <h4>Prestacoes</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Chaves.Tipo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Chaves.Tipo)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Contas.Tipo)
         </dt>
@@ -113,9 +111,9 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <input type="submit" value="Deletar" class="btn btn-danger " />
+            <button type="button" class="btn btn-secondary ">@Html.ActionLink("Cancelar", "Index")</button>
         </div>
     }
 </div>
