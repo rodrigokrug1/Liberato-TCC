@@ -241,6 +241,10 @@
     <Content Include="img\DataTables\sort_both.png" />
     <Content Include="img\DataTables\sort_desc.png" />
     <Content Include="img\DataTables\sort_desc_disabled.png" />
+    <Content Include="img\grad\brasil.png" />
+    <Content Include="img\grad\escudo.png" />
+    <Content Include="img\grad\mutante.png" />
+    <Content Include="img\grad\pp.png" />
     <Content Include="img\logo.png" />
     <Content Include="img\logoS.png" />
     <Content Include="Scripts de banco de dados\FC_VALIDA_CNPJCPF.sql" />

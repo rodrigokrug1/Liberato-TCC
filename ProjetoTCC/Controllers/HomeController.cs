@@ -15,8 +15,11 @@ namespace ProjetoTCC.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Membros = new SelectList(db.Membros.Where(m => m.Inativo == false)).Count();
-            ViewBag.Faccoes = new SelectList(db.Faccoes.Where(f => f.Inativo == false)).Count();
+            ViewBag.Escudo = new SelectList(db.Membros.Where(m => m.Inativo == false).Where(m => m.Graduacao == "ESCUDO")).Count();
+            ViewBag.Mutante = new SelectList(db.Membros.Where(m => m.Inativo == false).Where(m => m.Graduacao == "MUTANTE")).Count();
+            ViewBag.Brasil = new SelectList(db.Membros.Where(m => m.Inativo == false).Where(m => m.Graduacao == "BRASIL")).Count();
+            ViewBag.PP = new SelectList(db.Membros.Where(m => m.Inativo == false).Where(m => m.Graduacao == "PP")).Count();
+            // ViewBag.Faccoes = new SelectList(db.Faccoes.Where(f => f.Inativo == false)).Count();
 
             return View();
         }

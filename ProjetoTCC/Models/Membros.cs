@@ -25,7 +25,7 @@ namespace ProjetoTCC
         public int Matricula { get; set; }
 
         [Required(ErrorMessage = "Nome deve ser informado.")]
-        [StringLength(50, MinimumLength = 10, ErrorMessage = "Nome deve ter entre 10 e 50 caracteres.")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Nome deve ter entre 5 e 50 caracteres.")]
         public string Nome { get; set; }
 
         [Display(Name = "Graduação")]
@@ -120,12 +120,12 @@ namespace ProjetoTCC
 
         [Display(Name = "Nome do pai")]
         [Required(ErrorMessage = "Nome deve ser informado.")]
-        [StringLength(50, MinimumLength = 10, ErrorMessage = "Nome deve ter entre 10 e 50 caracteres.")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Nome deve ter entre 5 e 50 caracteres.")]
         public string NomePai { get; set; }
 
         [Display(Name = "Nome da mãe")]
         [Required(ErrorMessage = "Nome deve ser informado.")]
-        [StringLength(50, MinimumLength = 10, ErrorMessage = "Nome deve ter entre 10 e 50 caracteres.")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Nome deve ter entre 5 e 50 caracteres.")]
         public string NomeMae { get; set; }
 
         [Display(Name = "Tipo sanguíneo")]

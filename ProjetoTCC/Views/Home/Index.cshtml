@@ -4,34 +4,64 @@
     ViewBag.Title = "Home";
 }
 
-<section class="dashboard">
-    <div class="dashboard-numero"><strong>@ViewBag.Membros</strong></div>
-    <div class="dashboard-texto">Escudos</div>
-</section>
+<div>
+    <section class="dashboard-horizontal">
+        <div class="row">
+            <div class="col">
+                <strong>Próspero</strong>
+                <br />@ViewBag.PP
+                <br />membros
+            </div>
+            <div class="col imagem-graduacao">
+                <img src="~/img/grad/pp.png" width="61" height="73" style="float:right" />
+            </div>
+        </div>            
+    </section>
+</div>
 
-<section class="dashboard sem-borda">
-    <div class="dashboard-mini-top">
-        <strong>Próspero</strong>
-        </br>@ViewBag.Escudos
-        </br>membros
-    </div>
-    <div class="dashboard-mini-mid">
-        <strong>Brasil</strong>
-        </br>@ViewBag.PP
-        </br>membros
-    </div>
-    <div class="dashboard-mini-bot">
-        <strong>Meio-escudo</strong>
-        </br>
-        </br>membros
-    </div>
-</section>
+<div>
+    <section class="dashboard-horizontal">
+        <div class="row">
+            <div class="col">
+                <strong>Brasil</strong>
+                <br />@ViewBag.Brasil
+                <br />membros
+            </div>
+            <div class="col imagem-graduacao">
+                <img src="~/img/grad/brasil.png" width="61" height="73" style="float:right" />
+            </div>
+        </div>
+    </section>
+</div>
 
+<div>
+    <section class="dashboard-horizontal">
+        <div class="row">
+            <div class="col">
+                <strong>Mutante</strong>
+                <br />@ViewBag.Mutante
+                <br />membros
+            </div>
+            <div class="col imagem-graduacao">
+                <img src="~/img/grad/mutante.png" width="61" height="73" style="float:right" />
+            </div>
+        </div>
+    </section>
+</div>
 
-@*<div class="grafico-geo">
-    <div class="grafico">
-        <canvas id="graficoLinha" width="650" height="273"></canvas>
-    </div>
-</div>*@
+<div>
+    <section class="dashboard-horizontal">
+        <div class="row">
+            <div class="col">
+                <strong>Escudo</strong>
+                <br />@ViewBag.Escudo
+                <br />membros
+            </div>
+            <div class="col imagem-graduacao">
+                <img src="~/img/grad/escudo.png" width="61" height="73" style="float:right" />
+            </div>
+        </div>
+    </section>
+</div>
 
 
